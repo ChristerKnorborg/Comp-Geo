@@ -1,4 +1,5 @@
-from Shared import Point
+from Orientation import orientation
+from Shared import Point, print_points, sort_by_x_coordinate
 
 
 def gift_wrapping(points):
