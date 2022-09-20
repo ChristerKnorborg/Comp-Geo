@@ -16,7 +16,7 @@ for i in range(50):
     points.append(p)
     del p
 
-upper_hull = gift_wrapping(points)
+upper_hull = grahams_scan(points)
 print_points(upper_hull)
 
 a = []
@@ -31,3 +31,6 @@ for i in range(len(upper_hull)):
 plt.scatter(x,y) 
 plt.plot(a, b, color='red', linestyle='dashed', marker='o')
 plt.show()
+
+
+
