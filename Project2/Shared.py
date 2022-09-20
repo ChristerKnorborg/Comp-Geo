@@ -22,13 +22,13 @@ def print_points(points):
 
 
 
-tester =[p3, p1, p2]
-print("Før:")
-print_points(tester)
-sort_by_x_coordinate(tester)
-print("Efter:")
-print_points(tester)
-
+##tester =[p3, p1, p2]
+#print("Før:")
+#print_points(tester)
+#sort_by_x_coordinate(tester)
+#print("Efter:")
+##print_points(tester)
+##
 
 
 

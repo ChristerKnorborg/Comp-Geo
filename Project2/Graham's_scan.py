@@ -11,9 +11,10 @@ def grahams_scan(points):
     upper_hull.append(points[1])
 
 
-
     for i in range (2, len(points)):
-        while len(upper_hull) >= 2 and orientation(upper_hull[len(upper_hull)-2], upper_hull[len(upper_hull)-1], points[i]) == 2:
+        while len(upper_hull) >= 2 and orientation(upper_hull[len(upper_hull)-2], 
+                                                   upper_hull[len(upper_hull)-1],
+                                                   points[i]) == 2:
             del upper_hull[len(upper_hull)-1]
         upper_hull.append(points[i])
 
