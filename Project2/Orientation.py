@@ -6,15 +6,12 @@ def orientation(p1, p2, p3):
 
     if (val < 0):
         # Right
-        print("Right Turn")
         return 1
     elif (val > 0):
         # Left
-        print("Left Turn")
         return 2
     else:
         # Straight
-        print("No Turn")
         return 0
  
 
