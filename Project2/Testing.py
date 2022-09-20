@@ -4,10 +4,10 @@ from Graham_scan import grahams_scan
 from Gift_wrapping import gift_wrapping
 from Shared import Point, print_points
 
-num_of_points = 200
+num_of_points = 250
 
-x = np.random.randint(0,100,num_of_points)
-y = np.random.randint(0,100,num_of_points)
+x = np.random.randint(0,500,num_of_points)
+y = np.random.randint(0,500,num_of_points)
 
 
 
