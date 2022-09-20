@@ -4,14 +4,15 @@ from Graham_scan import grahams_scan
 from Gift_wrapping import gift_wrapping
 from Shared import Point, print_points
 
+num_of_points = 200
 
-x = np.random.randint(0,10,50)
-y = np.random.randint(0,10,50)
+x = np.random.randint(0,100,num_of_points)
+y = np.random.randint(0,100,num_of_points)
 
 
 
 points = []
-for i in range(50):
+for i in range(num_of_points):
     p = Point(x[i],y[i])
     points.append(p)
     del p

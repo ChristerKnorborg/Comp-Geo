@@ -14,16 +14,14 @@ class Point:
 def sort_by_x_coordinate(points):
     points.sort(key=lambda p: (p.x, p.y))
 
-
 def get_leftmost_point_idx(points):
     min_idx = 0
-    for idx, p in enumerate(points):
+    for idx, _ in enumerate(points):
         if points[idx].x < points[min_idx].x:
             min_idx = idx
         elif points[idx].x == points[min_idx].x:
             if points[idx].y < points[min_idx].y:
                 min_idx = idx 
-
     return min_idx
 
 def get_rightmost_point_idx(points):

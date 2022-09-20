@@ -30,7 +30,7 @@ p1 = Point(1, 1)
 p2 = Point(2, 1)
 p3 = Point(2, 3)
 print("LEFT TURN")
-orientation(p1, p2, p3) 
+orientation(p1, p2, p3)
 
 
 # Test
