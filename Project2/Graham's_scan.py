@@ -26,7 +26,7 @@ def grahams_scan(points):
 
 # Test grahams_scan
 p1 = Point(1, 1)
-p2 = Point(2, 1)
+p2 = Point(1, 2)
 p3 = Point(2, 3)
 p4 = Point(4, 3)
 p5 = Point(4, 4)

@@ -1,48 +1,46 @@
+from re import X
 from Orientation import orientation
-from Shared import Point, print_points, sort_by_x_coordinate
+from Shared import Point, print_points, sort_by_x_coordinate, get_leftmost_point_idx, get_rightmost_point_idx
 
 
 def gift_wrapping(points):
 
+    # need more than 2 points for hull
     n = len(points)
     if n <= 2:
         return
 
-    #Find lowest index by first finding the lowest value.
-    #This takes O(n) + O(n) and thus better than sorting.
-    lowest_val = min(p.x for p in points)
-    lowest_x = next((i for i, p in enumerate(points) if p.x == lowest_val), -1)
+    # find start point
+    min_idx = get_leftmost_point_idx(points)
 
     # find highest x val for stop critiria. We only compute upper hall
-    highest_val = max(p.x for p in points)
-    highest_x = next((i for i, p in enumerate(points) if p.x == highest_val), -1)
+    max_idx = get_rightmost_point_idx(points)
+
 
     hull = []
 
     # start index s, current i and next j
-    i = lowest_x
+    i = min_idx
     j = 0
     
     while(True):
-        
+        print(points[i].x)
         hull.append(points[i])
 
         j = (i + 1) % n
 
         for k in range(n):  
             # if left turn, then update next point to be wrapped (j) to new smallest angle
-            if orientation(points[i], points[k], points[j]) == 2:
+            if orientation(points[i], points[j], points[k]) == 2:
                 j = k
 
-        # at the end of the loop, the current is set to the next index
-        #if points[j].x < points[i].x:
-         #   print(points[j].x,points[i].x)
-           # break
-
+        # at the end of the loop, the current (i) is set to the next index (j)
         i = j
-
         
-        if i == lowest_x:
+        # breaks the algorithm after upper hull. 
+        # If changed to min_idx and append removed the whole hull is computed.
+        if i == max_idx:
+            hull.append(points[i])
             break
                 
     return hull
@@ -51,7 +49,7 @@ def gift_wrapping(points):
 
 # Test gift_wrapping
 p1 = Point(6, 4)
-p2 = Point(2, 1)
+p2 = Point(1, 2)
 p3 = Point(2, 3)
 p4 = Point(4, 3)
 p5 = Point(4, 4)
