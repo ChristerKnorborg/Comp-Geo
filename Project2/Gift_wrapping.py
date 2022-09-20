@@ -35,6 +35,10 @@ def gift_wrapping(points):
                 j = k
 
         # at the end of the loop, the current is set to the next index
+        #if points[j].x < points[i].x:
+         #   print(points[j].x,points[i].x)
+           # break
+
         i = j
 
         
