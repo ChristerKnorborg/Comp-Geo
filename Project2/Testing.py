@@ -45,7 +45,7 @@ def circle_test(algorithm, num_of_points, radius):
 
     np.random.seed(1)
     theta = np.random.uniform(0,2*np.pi, num_of_points)
-    radius = np.random.uniform(0,radius, num_of_points) ** 0.5
+    radius = np.random.uniform(0,radius, num_of_points)
 
     x = radius * np.cos(theta)
     y = radius * np.sin(theta)
@@ -74,7 +74,4 @@ def circle_test(algorithm, num_of_points, radius):
     plt.show()
 
 
-
-
-
-circle_test(grahams_scan,1000,5)
+circle_test(grahams_scan,1000,50)
