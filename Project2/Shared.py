@@ -35,6 +35,11 @@ def print_points(points):
         print(p.x, p.y)
 
 
+def divide_list_into_chunks(list, chucks):
+    for i in range(0, len(list), chucks):
+        yield list[i:i + chucks]        
+
+
 
 
 ##tester =[p3, p1, p2]
