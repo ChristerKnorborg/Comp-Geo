@@ -1,9 +1,3 @@
-from cgi import test
-from cmath import inf
-import operator
-from typing import List
-
-
 class Point:
 
     def __init__(self, x, y):

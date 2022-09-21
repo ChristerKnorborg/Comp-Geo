@@ -1,4 +1,3 @@
-from re import X
 from Orientation import orientation
 from Shared import Point, print_points, sort_by_x_coordinate, get_leftmost_point_idx, get_rightmost_point_idx
 
