@@ -74,4 +74,38 @@ def circle_test(algorithm, num_of_points, radius):
     plt.show()
 
 
-circle_test(grahams_scan,1000,50)
+
+
+
+def curve_test(algorithm, num_of_points, range_lower, range_upper):
+
+    x = np.random.randint(range_lower,range_upper,num_of_points)
+    y = x**2
+
+
+    points = []
+    for i in range(num_of_points):
+        p = Point(x[i],y[i])
+        points.append(p)
+        del p
+
+    upper_hull = algorithm(points)
+
+
+
+    print_points(upper_hull)
+
+    a = []
+    b = []
+    for i in range(len(upper_hull)):
+        a.append(upper_hull[i].x)
+        b.append(upper_hull[i].y)
+        
+
+    plt.scatter(x,y) 
+    plt.plot(a, b, color='red', linestyle='dashed', marker='o')
+    plt.show()
+
+
+
+curve_test(gift_wrapping,1000,0,50)
