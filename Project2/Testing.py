@@ -3,6 +3,7 @@ import numpy as np
 from Graham_scan import grahams_scan
 from Gift_wrapping import gift_wrapping
 from Shared import Point, print_points
+from Chan_algorithm import chan_algorithm
 
 
 
@@ -79,7 +80,7 @@ def circle_test(algorithm, num_of_points, radius):
 def curve_test(algorithm, num_of_points, range_lower, range_upper):
 
     x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = x**2
+    y = -x**2
 
 
     points = []
@@ -107,4 +108,5 @@ def curve_test(algorithm, num_of_points, range_lower, range_upper):
 
 
 
-curve_test(gift_wrapping,1000,0,50)
+square_test(chan_algorithm,1000,0,50)
+#circle_test(chan_algorithm,1000,50)
