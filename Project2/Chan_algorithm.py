@@ -2,7 +2,7 @@ from math import ceil, log2
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_list_into_chunks
+from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_list_into_chunks, print_points, Point
 
 
 def chan_algorithm(points):
@@ -50,8 +50,15 @@ def chan_algorithm(points):
 
 
             tanget_points = []
-            for j in range(len(partition_upper_hulls)):
+            print("LOOP", i, "partition_upper_hulls")            
+            print(len(partition_upper_hulls))
+            print(type(partition_upper_hulls))
+            print(type(partition_upper_hulls[0]))
+            print(len(partition_upper_hulls[0]))
 
+            for j in range(len(partition_upper_hulls)):
+                print("iteration", j, "len" , len(partition_upper_hulls[j]))
+                print(type(partition_upper_hulls[j]))
                 # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
                 if len(partition_upper_hulls[j]) > 0:
                     best = partition_upper_hulls[j][0]
@@ -99,13 +106,22 @@ def chan_algorithm(points):
 
             
 
+# Test grahams_scan
+p1 = Point(1, 1)
+p2 = Point(1, 2)
+p3 = Point(2, 3)
+p4 = Point(4, 3)
+p5 = Point(4, 4)
+p6 = Point(6, 2)
+p7 = Point(6, 4)
+p8 = Point(7, 3)
+p9 = Point(8, 2)
 
+test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
+
+upper_hull = chan_algorithm(test_list)
+print_points(upper_hull)
             
-def compute_tanget(point,points):
-
-    tangent = "dummy"
-    return tangent
-        
 
 
     

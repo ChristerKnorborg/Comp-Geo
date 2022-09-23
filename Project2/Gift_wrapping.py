@@ -47,20 +47,20 @@ def gift_wrapping(points):
 
 
 # Test gift_wrapping
-p1 = Point(6, 4)
-p2 = Point(1, 2)
-p3 = Point(2, 3)
-p4 = Point(4, 3)
-p5 = Point(4, 4)
-p6 = Point(6, 2)
-p7 = Point(1, 1)
-p8 = Point(7, 3)
-p9 = Point(8, 2)
+#p1 = Point(6, 4)
+#p2 = Point(1, 2)
+#p3 = Point(2, 3)
+#p4 = Point(4, 3)
+#p5 = Point(4, 4)
+#p6 = Point(6, 2)
+#p7 = Point(1, 1)
+#p8 = Point(7, 3)
+#p9 = Point(8, 2)
 
-test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
+#test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
 
-upper_hull = gift_wrapping(test_list)
-print_points(upper_hull)
+#upper_hull = gift_wrapping(test_list)
+#print_points(upper_hull)
 
 
 
