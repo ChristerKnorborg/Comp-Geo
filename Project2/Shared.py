@@ -35,9 +35,20 @@ def print_points(points):
         print(p.x, p.y)
 
 
-def divide_list_into_chunks(list, chuck_size):
-    for i in range(0, len(list), chuck_size):
-        yield list[i:i + chuck_size]        
+def divide_chunks(list, step) -> list:
+    
+    new_list = []
+    
+    leftover_iterations = len(list) % step
+    main_iterations = len(list) - leftover_iterations
+
+    for i in range(0, main_iterations, step):
+        new_list.append(list[i:i+step])
+
+    for i in range(0, leftover_iterations):
+        new_list[i].append(list[i])      
+
+    return new_list
 
 
 

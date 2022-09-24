@@ -1,3 +1,5 @@
+from math import floor
+from turtle import left
 from Gift_wrapping import gift_wrapping
 from Shared import Point
 
@@ -13,26 +15,29 @@ p9 = Point(8, 2)
 p10 = Point(8, 3)
 
 
-test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
+test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
 
 start = 0
-n = 3
+h = 3
 
-def divide_chunks(list, chunks):
-    for i in range(0, len(list), chunks):
-        yield list[i:i + chunks]
+def divide_chunks(list, step) -> list:
+
+    new_list = []
+    
+    leftover_iterations = len(list) % step
+    main_iterations = len(list) - leftover_iterations
+
+    for i in range(0, main_iterations, step):
+        new_list.append(list[i:i+step])
+
+    for i in range(0, leftover_iterations):
+        new_list[i].append(list[i])      
+
+    print(new_list)
+    return new_list
+    
 
 
-x = list(divide_chunks(test_list, n))
-
+x = divide_chunks(test_list, h)
 print(x)
-print(len(x))
-print("værdi?")
-print(x[0][2].x)
-print("len?")
-print(len(x[0]))
 
-print(len(test_list))
-
-
-print(gift_wrapping(x[0]))
