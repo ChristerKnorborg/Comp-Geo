@@ -31,7 +31,7 @@ def divide_chunks(list, step) -> list:
         new_list.append(list[i:i+step])
 
     for i in range(0, leftover_iterations):
-        new_list[i].append(list[i])      
+        new_list[i].append(list[main_iterations+i])      
 
     print(new_list)
     return new_list

@@ -61,12 +61,12 @@ def chan_algorithm(points):
                 if best != None:
                     tanget_points.append(best)
 
-
+            print("\n TANGET_POINTS \n", tanget_points)
             best = tanget_points[0]
             for k in range(len(tanget_points)):
                 if orientation(point_p, best, tanget_points[k]) == 2:
                     best = tanget_points[k]
-            
+            print("\n BEST TANGENT \n", best)
             if best != None:
                 point_p = best
             
