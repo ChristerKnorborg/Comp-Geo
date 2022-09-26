@@ -50,7 +50,7 @@ def divide_chunks(list, step) -> list:
         new_list.append(list[i:i+step])
 
     # to make algorithm runable
-    if leftover_iterations < 3:
+    if leftover_iterations < 3 and leftover_iterations != 0:
         new_list[0].append(list[main_iterations])
         if leftover_iterations > 1:
             new_list[1].append(list[main_iterations+1])
