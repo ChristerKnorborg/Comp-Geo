@@ -12,13 +12,11 @@ p6 = Point(6, 2)
 p7 = Point(6, 4)
 p8 = Point(7, 3)
 p9 = Point(8, 2)
-p10 = Point(8, 3)
 
-
-test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10]
+test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
 
 start = 0
-h = 3
+h = 4
 
 def divide_chunks(list, step) -> list:
 
@@ -33,7 +31,6 @@ def divide_chunks(list, step) -> list:
     for i in range(0, leftover_iterations):
         new_list[i].append(list[main_iterations+i])      
 
-    print(new_list)
     return new_list
     
 

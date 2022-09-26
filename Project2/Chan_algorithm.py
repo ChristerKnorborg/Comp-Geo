@@ -35,14 +35,16 @@ def chan_algorithm(points):
         point_p = points[p]
         max_coordinate_point = points[max_coordinate]
 
+        print("\n Leftmost point:\n" , point_p)
+
         for i in range(h):
 
-            upper_hull.append(p)
+            upper_hull.append(point_p)
 
             # Upper_Hall computed if max coordinate is point_p
             if point_p == max_coordinate_point:
                 print("MAX COORDINATE BREAK: SUCCES!")
-                break
+                return True
 
 
             tanget_points = []
@@ -56,7 +58,7 @@ def chan_algorithm(points):
                     continue
                 
                 for k in range(len(partition_upper_hulls[j])):
-                    if orientation(point_p, best, partition_upper_hulls[j][k]) == 2:
+                    if orientation(point_p, best, partition_upper_hulls[j][k]) != 1:
                         best = partition_upper_hulls[j][k]
                 if best != None:
                     tanget_points.append(best)
@@ -64,9 +66,9 @@ def chan_algorithm(points):
             print("\n TANGET_POINTS \n", tanget_points)
             best = tanget_points[0]
             for k in range(len(tanget_points)):
-                if orientation(point_p, best, tanget_points[k]) == 2:
+                if orientation(point_p, best, tanget_points[k]) != 1:
                     best = tanget_points[k]
-            print("\n BEST TANGENT \n", best)
+            print("\n BEST TANGENT (x, y) \n", (best.x, best.y))
             if best != None:
                 point_p = best
             
@@ -75,24 +77,30 @@ def chan_algorithm(points):
             for j in range(len(partition_upper_hulls)):
                for k in range(len(partition_upper_hulls[j])):
                     if partition_upper_hulls[j][k].x < best.x:
-                        print("")
+                        print("\n should remove point \n ", (partition_upper_hulls[j][k].x, partition_upper_hulls[j][k].y))
 
 
             # 
             partition_upper_hulls = [[point for point in outer if point.x >= best.x] for outer in partition_upper_hulls]
             print("\npartition_upper_hulls after remove \n", partition_upper_hulls)
 
-        print("FAILURE")
+        print("\n End of loop upper hull \n")
+        for p in upper_hull:
+            print(" ", (p.x,p.y))
+
+        return False, []
+
 
 
 
     n = len(points)
-    
     range_param = ceil(log2(log2((n))))
-    for i in range(1,range_param):
-        h = ceil(2**(2**i))
-        if (upper_hall_with_size(points,h)):
-            break            
+    # from 1 to log log n. Range exclusive in python - why +1.
+    for i in range(1,range_param+1):
+        h = int(2**2**i)
+        cond, upper_hull = upper_hall_with_size(points,h)
+        if cond:
+            return upper_hull            
 
 
             
