@@ -15,7 +15,7 @@ p9 = 9
 p10 = 10
 p11 = 11
 
-test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11]
+test_list = [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p11]
 
 
 h = 4
@@ -33,14 +33,15 @@ def divide_chunks(list, step) -> list:
 
     print("main iterations & leftover", main_iterations, leftover_iterations)
 
-    for i in range(0, len(list), step):
+    for i in range(0, main_iterations, step):
         new_list.append(list[i:i+step])
 
 
-
-    #for i in range(0, leftover_iterations):
-        #print("iteration",i)
-        #new_list[i].append(list[main_iterations+i])      
+    n = len(new_list)
+    for i in range(0, leftover_iterations):
+        add_idx = i % n
+        print("iteration",i)
+        new_list[add_idx].append(list[main_iterations+i])      
 
     return new_list
     

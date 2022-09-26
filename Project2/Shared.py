@@ -46,16 +46,14 @@ def divide_chunks(list, step) -> list:
     leftover_iterations = len(list) % step
     main_iterations = len(list) - leftover_iterations
 
-    print("main iterations & leftover", main_iterations, leftover_iterations)
-
-    for i in range(0, len(list), step):
+    for i in range(0, main_iterations, step):
         new_list.append(list[i:i+step])
 
 
-
-    #for i in range(0, leftover_iterations):
-        #print("iteration",i)
-        #new_list[i].append(list[main_iterations+i])      
+    n = len(new_list)
+    for i in range(0, leftover_iterations):
+        add_idx = i % n
+        new_list[add_idx].append(list[main_iterations+i])      
 
     return new_list
 
