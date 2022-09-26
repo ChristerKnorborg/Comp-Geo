@@ -38,22 +38,31 @@ def print_points(points):
 def divide_chunks(list, step) -> list:
     
     new_list = []
-    
+
+    if step > len(list):
+        new_list.append(list)
+        return new_list
+        
     leftover_iterations = len(list) % step
     main_iterations = len(list) - leftover_iterations
 
-    for i in range(0, main_iterations, step):
+    print("main iterations & leftover", main_iterations, leftover_iterations)
+
+    for i in range(0, len(list), step):
         new_list.append(list[i:i+step])
 
-    for i in range(0, leftover_iterations):
-        new_list[i].append(list[main_iterations+i])      
+
+
+    #for i in range(0, leftover_iterations):
+        #print("iteration",i)
+        #new_list[i].append(list[main_iterations+i])      
 
     return new_list
 
 
 
 
-##tester =[p3, p1, p2]
+#tester =[p3, p1, p2]
 #print("Før:")
 #print_points(tester)
 #sort_by_x_coordinate(tester)

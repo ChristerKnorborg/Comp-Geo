@@ -40,15 +40,15 @@ def square_test(algorithm, num_of_points, range_lower, range_upper):
 
 
 
-def circle_test(algorithm, num_of_points, radius):
+def circle_test(algorithm, num_of_points, diameter):
 
 
     np.random.seed(1)
     theta = np.random.uniform(0,2*np.pi, num_of_points)
-    radius = np.random.uniform(0,radius, num_of_points)
+    diameter = np.random.uniform(0,diameter, num_of_points) **0.5
 
-    x = radius * np.cos(theta)
-    y = radius * np.sin(theta)
+    x = diameter * np.cos(theta)
+    y = diameter * np.sin(theta)
 
     points = []
     for i in range(num_of_points):
@@ -108,5 +108,5 @@ def curve_test(algorithm, num_of_points, range_lower, range_upper):
 
 
 
-square_test(chan_algorithm,1000,0,50)
-#circle_test(chan_algorithm,1000,50)
+#square_test(chan_algorithm,6,0,40)
+circle_test(chan_algorithm,1000,50)

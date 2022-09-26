@@ -43,8 +43,7 @@ def chan_algorithm(points):
 
             # Upper_Hall computed if max coordinate is point_p
             if point_p == max_coordinate_point:
-                print("MAX COORDINATE BREAK: SUCCES!")
-                return True
+                return True, upper_hull
 
 
             tanget_points = []
@@ -94,6 +93,9 @@ def chan_algorithm(points):
 
 
     n = len(points)
+    if n <= 2:
+        return
+        
     range_param = ceil(log2(log2((n))))
     # from 1 to log log n. Range exclusive in python - why +1.
     for i in range(1,range_param+1):
