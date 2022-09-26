@@ -108,5 +108,5 @@ def curve_test(algorithm, num_of_points, range_lower, range_upper):
 
 
 
-square_test(chan_algorithm,3,0,10)
-#circle_test(chan_algorithm,50,50)
+square_test(chan_algorithm,18,0,50)
+#circle_test(chan_algorithm,500,5000)
