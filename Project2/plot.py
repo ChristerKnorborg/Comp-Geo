@@ -30,11 +30,11 @@ def bænkemærke_box():
     np.random.seed(100)
 
     xpoints = np.array(0.0,dtype=np.float64)
-    blandtimes = np.array(0.0 , dtype = np.float64)
-    coeftimes = np.array(0.0,dtype = np.float64)
-    inctimes = np.array(0.0,dtype = np.float64)
+    grahamtimes = np.array(0.0 , dtype = np.float64)
+    gifttimes = np.array(0.0,dtype = np.float64)
+    chantimes = np.array(0.0,dtype = np.float64)
 
-    for i in range(1, 40):
+    for i in range(1, 24):
         print("Round: " , i)
         n = 2 ** i
         
@@ -46,7 +46,7 @@ def bænkemærke_box():
         timestop_graham = time.time()
         running_time_bland = timestop_graham - timestart_graham
 
-        blandtimes = np.append(blandtimes , running_time_bland)
+        grahamtimes = np.append( grahamtimes , running_time_bland)
         print("Running time Graham Scan: " + str(running_time_bland))
 
         timestart_gift = time.time()
@@ -54,7 +54,7 @@ def bænkemærke_box():
         timestop_gift = time.time()
         running_time_coef = timestop_gift - timestart_gift
 
-        coeftimes = np.append(coeftimes , running_time_coef)
+        gifttimes = np.append(gifttimes , running_time_coef)
         print("Running time Gift Wrapping: " + str(running_time_coef))
 
 
@@ -63,12 +63,12 @@ def bænkemærke_box():
         timestop_chan = time.time()
         running_time_inc = timestop_chan - timestart_chan
 
-        inctimes = np.append(inctimes , running_time_inc)
+        chantimes = np.append(chantimes , running_time_inc)
         print("Running time Chan: " + str(running_time_inc))
 
-    plt.plot(xpoints , blandtimes , label = "Graham Scan" )
-    plt.plot(xpoints, coeftimes , label = "Gift Wrapping")
-    plt.plot(xpoints , inctimes , label = "Chan's Algorithm")
+    plt.plot(xpoints ,  grahamtimes , label = "Graham Scan" )
+    plt.plot(xpoints, gifttimes , label = "Gift Wrapping")
+    plt.plot(xpoints , chantimes , label = "Chan's Algorithm")
     leg = plt.legend(loc='upper center')
     plt.show()
 
