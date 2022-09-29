@@ -23,7 +23,6 @@ def gift_wrapping(points):
     j = 0
     
     while(True):
-        print(points[i].x)
         hull.append(points[i])
 
         j = (i + 1) % n

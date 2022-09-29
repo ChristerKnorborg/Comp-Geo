@@ -1,3 +1,4 @@
+from re import S
 import numpy as np
 import matplotlib.pyplot as plt
 import time
@@ -19,10 +20,21 @@ def generate_square_points_test(num_of_points, range_lower, range_upper):
 
     return points
 
-def run_algorithm_square(algorithm, range_lower, range_upper, num_of_points):
-    points = generate_square_points_test(range_lower, range_upper, num_of_points)
+def generate_circle_points_test(num_of_points):
+    # np.random.seed(1)
+    theta = np.random.uniform(0,2*np.pi, num_of_points)
+    diameter = np.random.uniform(0,diameter, num_of_points) ** 0.5
 
-    upper_hull = algorithm(points)
+    x = diameter * np.cos(theta)
+    y = diameter * np.sin(theta)
+
+    points = []
+    for i in range(num_of_points):
+        p = Point(x[i],y[i])
+        points.append(p)
+        del p
+
+    return points 
 
 
 def bænkemærke_box():
@@ -34,15 +46,20 @@ def bænkemærke_box():
     gifttimes = np.array(0.0,dtype = np.float64)
     chantimes = np.array(0.0,dtype = np.float64)
 
-    for i in range(1, 24):
+
+    s = 8
+    for i in range(2, 16):
         print("Round: " , i)
         n = 2 ** i
+
+        s = 1.41*s
         
 
         xpoints = np.append(xpoints , n)
+        points = generate_square_points_test(n, 0, s)
 
         timestart_graham = time.time()
-        run_algorithm_square(grahams_scan, n, 0, i*10)
+        graham = grahams_scan(points)
         timestop_graham = time.time()
         running_time_bland = timestop_graham - timestart_graham
 
@@ -50,7 +67,7 @@ def bænkemærke_box():
         print("Running time Graham Scan: " + str(running_time_bland))
 
         timestart_gift = time.time()
-        run_algorithm_square(gift_wrapping, n, 0, i*10)
+        gift = gift_wrapping(points)
         timestop_gift = time.time()
         running_time_coef = timestop_gift - timestart_gift
 
@@ -59,12 +76,27 @@ def bænkemærke_box():
 
 
         timestart_chan = time.time()
-        run_algorithm_square(chan_algorithm, i*10, 0, n)
+        chan = chan_algorithm(points)
         timestop_chan = time.time()
         running_time_inc = timestop_chan - timestart_chan
 
         chantimes = np.append(chantimes , running_time_inc)
         print("Running time Chan: " + str(running_time_inc))
+
+        chan_len = len(chan)
+        gift_len = len(gift)
+        graham_len = len(graham)
+
+        lower_bound = graham_len * 0.9
+        upper_bound = graham_len * 1.1
+
+        if gift_len < lower_bound or gift_len > upper_bound:
+            print("gift len over 10% away from graham")
+
+        if chan_len < lower_bound or chan_len > upper_bound:
+            print("chan len over 10% away from graham")
+
+        
 
     plt.plot(xpoints ,  grahamtimes , label = "Graham Scan" )
     plt.plot(xpoints, gifttimes , label = "Gift Wrapping")

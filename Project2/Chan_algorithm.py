@@ -88,7 +88,3 @@ def chan_algorithm(points):
         cond, upper_hull = upper_hall_with_size(points,h)
         if cond:
             return upper_hull            
-
-
-
-    
