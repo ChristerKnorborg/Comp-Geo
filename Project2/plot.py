@@ -48,7 +48,7 @@ def bænkemærke_box():
 
 
     s = 8
-    for i in range(2, 16):
+    for i in range(2, 20):
         print("Round: " , i)
         n = 2 ** i
 
@@ -87,14 +87,14 @@ def bænkemærke_box():
         gift_len = len(gift)
         graham_len = len(graham)
 
-        lower_bound = graham_len * 0.9
-        upper_bound = graham_len * 1.1
+        lower_bound = graham_len * 0.5
+        upper_bound = graham_len * 1.5
 
         if gift_len < lower_bound or gift_len > upper_bound:
-            print("gift len over 10% away from graham")
+            print("gift len over 50% away from graham")
 
         if chan_len < lower_bound or chan_len > upper_bound:
-            print("chan len over 10% away from graham")
+            print("chan len over 50% away from graham")
 
         
 
