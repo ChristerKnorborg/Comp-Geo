@@ -31,7 +31,7 @@ def upper_hall_with_size(points,h):
 
         upper_hull = []
 
-        for i in range(h):
+        for _ in range(h):
 
             upper_hull.append(p)
 
@@ -40,7 +40,7 @@ def upper_hall_with_size(points,h):
                 return True, upper_hull
 
 
-            tanget_points = []
+            best_tanget = None
 
 
             for j in range(len(partition_upper_hulls)):
@@ -53,16 +53,17 @@ def upper_hall_with_size(points,h):
                 for k in range(len(partition_upper_hulls[j])):
                     if orientation(p, best, partition_upper_hulls[j][k]) != 1:
                         best = partition_upper_hulls[j][k]
+
                     #else: del partition_upper_hulls[j][k]
                 if best != None:
-                    tanget_points.append(best)
+                    if best_tanget == None:
+                        best_tanget = best
+                    else:
+                        if orientation(p, best_tanget, best) != 1:
+                            best_tanget = best
+                        
 
-            best = tanget_points[0]
-            
-            for k in range(len(tanget_points)):
-                if orientation(p, best, tanget_points[k]) != 1:
-                    best = tanget_points[k]
-            if best != None:
+            if best_tanget != None:
                 p = best
             
             partition_upper_hulls = [[point for point in outer if point.x >= best.x] for outer in partition_upper_hulls]

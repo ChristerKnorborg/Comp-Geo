@@ -28,7 +28,7 @@ def benchmark(test_type):
 
     s = 8
 
-    for i in range(2, 8):
+    for i in range(2, 16):
         print("Round: " , i)
 
         # double number of points each test iteration and
@@ -97,7 +97,7 @@ def benchmark(test_type):
     plt.plot(xpoints, gifttimes , label = "Gift Wrapping")
     plt.plot(xpoints , chantimes , label = "Chan's Algorithm")
     leg = plt.legend(loc='upper center')
-    plt.xscale('log',base=2)
+    #plt.xscale('log',base=2)
     plt.show()
 
 
