@@ -1,5 +1,6 @@
 from math import ceil, log2
 import time
+from tkinter import EW
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
@@ -59,24 +60,57 @@ def upper_hall_with_size(points,h):
 
 
             #tangent_start = time.time()
+
+
+
             for j in range(len(partition_upper_hulls)):
+                
+
+                '''
                 # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
                 if len(partition_upper_hulls[j]) > 0:
+                    # set best to lowest coordinate in the upper hull partition
                     best = partition_upper_hulls[j][0]
                 else:
                     continue
+                '''
                 
-                for k in range(len(partition_upper_hulls[j])):
-                    if orientation(p, best, partition_upper_hulls[j][k]) != 1:
-                        best = partition_upper_hulls[j][k]
 
-                    #else: del partition_upper_hulls[j][k]
-                if best != None:
-                    if best_tanget == None:
-                        best_tanget = best
+                
+
+                while (True):
+                    best = partition_upper_hulls[j][0]
+                    param = int(len(partition_upper_hulls[j]) / 2)
+
+                    o_test = orientation(p,best,param)
+                                    
+                    if o_test != 1:
+                        best = partition_upper_hulls[j][param]
                     else:
-                        if orientation(p, best_tanget, best) != 1:
-                            best_tanget = best
+                        best = param
+                        neighbour_left = best-1
+                        neighbour_right = best+1
+
+                        o_test_left = orientation(p,best,neighbour_left)
+                        o_test_right = orientation(p,best,neighbour_right)
+                        
+                        if o_test_left != 2:
+                            param = int(param/2)
+
+                        elif o_test_right != 2:
+                            param = int(param*1.5)
+
+                        else: 
+                            if best != None:
+                                if best_tanget == None:
+                                    best_tanget = best
+                                else:
+                                    if orientation(p, best_tanget, best) != 1:
+                                        best_tanget = best
+                            break
+
+
+
             #global tangent_time
             #tangent_time = (time.time() - tangent_start)
 
@@ -132,4 +166,27 @@ print("Chunks time: ", chunks_time)
 print("Remove time: ", remove_time)
 
 print(upper_hull)
+'''
+
+
+
+
+'''for j in range(len(partition_upper_hulls)):
+                # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
+                if len(partition_upper_hulls[j]) > 0:
+                    best = partition_upper_hulls[j][0]
+                else:
+                    continue
+                
+                for k in range(len(partition_upper_hulls[j])):
+                    if orientation(p, best, partition_upper_hulls[j][k]) != 1:
+                        best = partition_upper_hulls[j][k]
+
+                    #else: del partition_upper_hulls[j][k]
+                if best != None:
+                    if best_tanget == None:
+                        best_tanget = best
+                    else:
+                        if orientation(p, best_tanget, best) != 1:
+                            best_tanget = best
 '''
