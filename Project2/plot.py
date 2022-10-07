@@ -28,7 +28,7 @@ def benchmark(test_type):
 
     s = 8
 
-    for i in range(2, 16):
+    for i in range(2, 12):
         print("Round: " , i)
 
         # double number of points each test iteration and

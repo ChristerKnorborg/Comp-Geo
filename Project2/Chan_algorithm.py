@@ -1,8 +1,15 @@
 from math import ceil, log2
+import time
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
 from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks, print_points, Point
+
+
+tangent_time = 0
+partition_time = 0
+
+
 
 # find upper hull for all partitions
 def calc_partition_upper_hulls(partition):
@@ -15,12 +22,20 @@ def calc_partition_upper_hulls(partition):
 
 
 def upper_hall_with_size(points,h):
-        
+        #chunks_start = time.time()
         # Make m partitions
         partition = divide_chunks(points, h)
+        #global chunks_time
+        #chunks_time = (time.time() - chunks_start)
+
+
+
 
         # find upper hull for all m partitions
+        #partition_start = time.time()
         partition_upper_hulls = calc_partition_upper_hulls(partition)
+        #global partition_time
+        #partition_time = (time.time() - partition_start)
 
         # Find start point p and max coordinate (stop criteria) 
         start_coordinate = get_leftmost_point_idx(points)
@@ -43,6 +58,7 @@ def upper_hall_with_size(points,h):
             best_tanget = None
 
 
+            #tangent_start = time.time()
             for j in range(len(partition_upper_hulls)):
                 # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
                 if len(partition_upper_hulls[j]) > 0:
@@ -61,12 +77,17 @@ def upper_hall_with_size(points,h):
                     else:
                         if orientation(p, best_tanget, best) != 1:
                             best_tanget = best
-                        
+            #global tangent_time
+            #tangent_time = (time.time() - tangent_start)
 
             if best_tanget != None:
                 p = best
             
+            
+            #remove_start = time.time()
             partition_upper_hulls = [[point for point in outer if point.x >= best.x] for outer in partition_upper_hulls]
+            #global remove_time
+            #remove_time = (time.time() - remove_start)
 
         return False, []
 
@@ -84,3 +105,31 @@ def chan_algorithm(points):
         cond, upper_hull = upper_hall_with_size(points,h)
         if cond:
             return upper_hull            
+
+
+
+
+
+
+#points = []
+
+
+
+'''
+for i in range(0,10000000):
+    p = Point(i,i)
+    points.append(p)
+
+
+start_total = time.time()
+upper_hull = chan_algorithm(points)
+total_time = time.time() - start_total
+
+print("Total time: ", total_time)
+print("Tangent time: ", tangent_time)
+print("Partition time: ", partition_time)
+print("Chunks time: ", chunks_time)
+print("Remove time: ", remove_time)
+
+print(upper_hull)
+'''

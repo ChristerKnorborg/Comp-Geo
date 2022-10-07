@@ -23,7 +23,7 @@ def gen_circle_data(num_of_points, diameter):
 
 def gen_curve_data(num_of_points, range_lower, range_upper):
     x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = -x**2
+    y = x**2
 
     return x,y
 
@@ -115,7 +115,7 @@ def curve_test(num_of_points, range_lower, range_upper):
 
 
 
-square_test(100,0,5000)
+#square_test(100,0,5000)
 #circle_test(200,20000)
 #curve_test(20,0,50)
 
