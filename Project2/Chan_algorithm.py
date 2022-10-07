@@ -77,27 +77,29 @@ def upper_hall_with_size(points,h):
                 if len(partition_upper_hulls[j]) > 0:
 
                     best = partition_upper_hulls[j][0]
+                    param = int(len(partition_upper_hulls[j]) / 2)
                     while (True):
-                        print("loopin louie")
-                        param = int(len(partition_upper_hulls[j]) / 2)
 
-                        o_test = orientation(p,best,param)
-                                        
+                        param_point = partition_upper_hulls[j][param]
+
+                        o_test = orientation(p,best,param_point)                
                         if o_test != 1:
                             best = partition_upper_hulls[j][param]
-                        else:
-                            best = param
-                            neighbour_left = partition_upper_hulls[j][best-1]
-                            neighbour_right = partition_upper_hulls[j][best+1]
+                            best_idx = param
+                            neighbour_left = partition_upper_hulls[j][best_idx-1]
+                            neighbour_right = partition_upper_hulls[j][best_idx+1]
 
                             o_test_left = orientation(p,best,neighbour_left)
                             o_test_right = orientation(p,best,neighbour_right)
                             
                             if o_test_left != 1:
                                 param = int(param/2)
+                                print("havles")
 
                             elif o_test_right != 1:
                                 param = int(param*1.5)
+                                print("doubles")
+                                
                             else: 
                                 print("elso")
                                 if best != None:
@@ -109,6 +111,7 @@ def upper_hall_with_size(points,h):
                                             best_tanget = best
                                 break
                             print(param)
+                        
 
                 else:
                     continue
@@ -148,7 +151,7 @@ def chan_algorithm(points):
 
 
 points = []
-for i in range(0,10000000):
+for i in range(0,100):
     p = Point(i,i)
     points.append(p)
 
