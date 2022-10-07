@@ -74,42 +74,44 @@ def upper_hall_with_size(points,h):
                 else:
                     continue
                 '''
-                
+                if len(partition_upper_hulls[j]) > 0:
 
-                
-
-                while (True):
                     best = partition_upper_hulls[j][0]
-                    param = int(len(partition_upper_hulls[j]) / 2)
+                    while (True):
+                        print("loopin louie")
+                        param = int(len(partition_upper_hulls[j]) / 2)
 
-                    o_test = orientation(p,best,param)
-                                    
-                    if o_test != 1:
-                        best = partition_upper_hulls[j][param]
-                    else:
-                        best = param
-                        neighbour_left = best-1
-                        neighbour_right = best+1
+                        o_test = orientation(p,best,param)
+                                        
+                        if o_test != 1:
+                            best = partition_upper_hulls[j][param]
+                        else:
+                            best = param
+                            neighbour_left = partition_upper_hulls[j][best-1]
+                            neighbour_right = partition_upper_hulls[j][best+1]
 
-                        o_test_left = orientation(p,best,neighbour_left)
-                        o_test_right = orientation(p,best,neighbour_right)
-                        
-                        if o_test_left != 2:
-                            param = int(param/2)
+                            o_test_left = orientation(p,best,neighbour_left)
+                            o_test_right = orientation(p,best,neighbour_right)
+                            
+                            if o_test_left != 1:
+                                param = int(param/2)
 
-                        elif o_test_right != 2:
-                            param = int(param*1.5)
-
-                        else: 
-                            if best != None:
-                                if best_tanget == None:
-                                    best_tanget = best
-                                else:
-                                    if orientation(p, best_tanget, best) != 1:
+                            elif o_test_right != 1:
+                                param = int(param*1.5)
+                            else: 
+                                print("elso")
+                                if best != None:
+                                    print("best is not none")
+                                    if best_tanget == None:
                                         best_tanget = best
-                            break
+                                    else:
+                                        if orientation(p, best_tanget, best) != 1:
+                                            best_tanget = best
+                                break
+                            print(param)
 
-
+                else:
+                    continue
 
             #global tangent_time
             #tangent_time = (time.time() - tangent_start)
@@ -145,28 +147,24 @@ def chan_algorithm(points):
 
 
 
-#points = []
-
-
-
-'''
+points = []
 for i in range(0,10000000):
     p = Point(i,i)
     points.append(p)
 
 
-start_total = time.time()
+#start_total = time.time()
 upper_hull = chan_algorithm(points)
-total_time = time.time() - start_total
+#total_time = time.time() - start_total
 
-print("Total time: ", total_time)
-print("Tangent time: ", tangent_time)
-print("Partition time: ", partition_time)
-print("Chunks time: ", chunks_time)
-print("Remove time: ", remove_time)
+#print("Total time: ", total_time)
+#print("Tangent time: ", tangent_time)
+#print("Partition time: ", partition_time)
+#print("Chunks time: ", chunks_time)
+#print("Remove time: ", remove_time)
 
 print(upper_hull)
-'''
+
 
 
 
