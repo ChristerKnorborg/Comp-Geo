@@ -3,6 +3,8 @@ class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        
+
     
 
 def sort_by_x_coordinate(points):

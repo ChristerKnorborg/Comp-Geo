@@ -1,96 +1,52 @@
 from math import ceil, log2
 import time
-from tkinter import EW
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
 from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks, print_points, Point
 
+def printarray(arr):
+    
+    print("\nlen of arr:", len(arr))
+    for p in arr:
+        print((p.x,p.y))
 
-tangent_time = 0
-partition_time = 0
-
-
-neighbour_left = arr[j][best_idx-1]
-neighbour_right = arr[j][best_idx+1]
-
-o_test_left = orientation(p,best,neighbour_left)
-o_test_right = orientation(p,best,neighbour_right)
-
-if o_test_left != 1:
 
 def binary_search_orientation(arr, p):
-    left = 0
-    right = len(arr) - 1
- 
+    low = 0
+    high = len(arr) - 1
+    #printarray(arr)
+    
+
     while low <= high:
- 
-        right = (left + right) // 2
- 
-        # If x is greater, ignore left half
-        if orientation(p, arr[left], arr[right]):
-        if arr[mid] < x:
+        mid = (low + high) // 2
+
+        predecessor = orientation(p, arr[mid], arr[mid-1])
+        successor = orientation(p, arr[mid], arr[mid+1])
+
+        print(predecessor)
+        print(successor)
+
+        # If pre left turn and succ right turn, split in lower halves 
+        if predecessor != 1 and successor == 1:
+            high = mid - 1
+
+        # If pre right turn and succ right turn, split in upper halves 
+        elif predecessor == 1 and successor != 1:
             low = mid + 1
  
-        # If x is smaller, ignore right half
-        elif arr[mid] > x:
-            high = mid - 1
+         # If left turn to neither predec or succ, element is found
+        elif predecessor != 2 and successor != 2:
+            return arr[mid]
  
-        # means x is present at mid
-        else:
-            return mid
- 
+# check punkt længst til venstre eller højre -> terminer!
+
+
     # If we reach here, then the element was not present
-    return -1
+    print("end reached")
+    return None
 
 
-
-def binary_search(arr, low, high):
-
-    for j in range(len(arr)):
-
-
-        if len(arr[j]) > 0:
-            best = arr[j][0]
-            param = int(len(arr[j]) / 2)
-            while (True):
-
-                param_point = arr[j][param]
-
-                o_test = orientation(p,best,param_point)                
-                if o_test != 1:
-                    best = arr[j][param]
-                    best_idx = param
-                    neighbour_left = arr[j][best_idx-1]
-                    neighbour_right = arr[j][best_idx+1]
-
-                    o_test_left = orientation(p,best,neighbour_left)
-                    o_test_right = orientation(p,best,neighbour_right)
-                    
-                    if o_test_left != 1:
-                        param = int(param/2)
-                        print("havles")
-                        if o_test_left == 0:
-                            best 
-
-                    elif o_test_right != 1:
-                        param = int(param*1.5)
-                        print("doubles")
-                        
-                    else: 
-                        print("elso")
-                        if best != None:
-                            print("best is not none")
-                            if best_tanget == None:
-                                best_tanget = best
-                            else:
-                                if orientation(p, best_tanget, best) != 1:
-                                    best_tanget = best
-                        break
-                    print(param)
-
-                else:
-                    continue
 
 
 
@@ -135,36 +91,43 @@ def upper_hall_with_size(points,h):
 
             # Upper_Hall computed if max coordinate is p
             if p == max_coordinate_point:
+                print("max coord")
                 return True, upper_hull
 
 
-            best_tanget = None
+            best_tangent = None
 
 
-            #tangent_start = time.time()
-
-
+            for j in range(len(partition_upper_hulls)):
                 
+                if len(partition_upper_hulls[j]) < 1:
+                    continue
 
-            '''
-            # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
-            if len(partition_upper_hulls[j]) > 0:
-                # set best to lowest coordinate in the upper hull partition
-                best = partition_upper_hulls[j][0]
-            else:
-                continue
-            '''
-            best_tanget = binary_search(partition_upper_hulls, 0, len(partition_upper_hulls)-1)
+                else: 
+                    tangent = binary_search_orientation(partition_upper_hulls[j], p)
+                    print("tangent:", (tangent.x,tangent.y))
+                    if tangent != None:
+                        if best_tangent == None:
+                            best_tangent = tangent
+                        else:
+                            if orientation(p, best_tangent, tangent) != 1:
+                                best_tangent = tangent
+
+
+
+                if best_tangent != None:
+                    p = best_tangent
+                    #print("BEST", best_tangent)
+            #tangent_start = time.time()
 
             #global tangent_time
             #tangent_time = (time.time() - tangent_start)
 
-            #if best_tanget != None:
-             #   p = best
+
             
             
             #remove_start = time.time()
-            partition_upper_hulls = [[point for point in outer if point.x >= best.x] for outer in partition_upper_hulls]
+            partition_upper_hulls = [[point for point in outer if point.x >= best_tangent.x] for outer in partition_upper_hulls]
             #global remove_time
             #remove_time = (time.time() - remove_start)
 
@@ -188,12 +151,18 @@ def chan_algorithm(points):
 
 
 
+p1 = Point(1,1)
+p2 = Point(1,2)
+p3 = Point(2,3)
+p4 = Point(4,4)
+p5 = Point(4,3)
+p6 = Point(6,2)
+p7 = Point(6,4)
+p8 = Point(7,1)
+p9 = Point(8,2)
 
+points = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
 
-points = []
-for i in range(0,100):
-    p = Point(i,i)
-    points.append(p)
 
 
 #start_total = time.time()
@@ -208,26 +177,3 @@ upper_hull = chan_algorithm(points)
 
 print(upper_hull)
 
-
-
-
-
-'''for j in range(len(partition_upper_hulls)):
-                # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
-                if len(partition_upper_hulls[j]) > 0:
-                    best = partition_upper_hulls[j][0]
-                else:
-                    continue
-                
-                for k in range(len(partition_upper_hulls[j])):
-                    if orientation(p, best, partition_upper_hulls[j][k]) != 1:
-                        best = partition_upper_hulls[j][k]
-
-                    #else: del partition_upper_hulls[j][k]
-                if best != None:
-                    if best_tanget == None:
-                        best_tanget = best
-                    else:
-                        if orientation(p, best_tanget, best) != 1:
-                            best_tanget = best
-'''
