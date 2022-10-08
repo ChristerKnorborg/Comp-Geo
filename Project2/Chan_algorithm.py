@@ -19,26 +19,41 @@ def binary_search_orientation(arr, p):
     
 
     while low <= high:
+
         mid = (low + high) // 2
+
+        # out of range check
+        if mid == 0 or mid == len(arr)-1:
+            return arr[mid]
+
 
         predecessor = orientation(p, arr[mid], arr[mid-1])
         successor = orientation(p, arr[mid], arr[mid+1])
 
-        print(predecessor)
-        print(successor)
 
-        # If pre left turn and succ right turn, split in lower halves 
-        if predecessor != 1 and successor == 1:
+        # If predecessor left turn and successor right turn, split in lower halves.
+        if predecessor == 2 and successor == 1:
             high = mid - 1
 
-        # If pre right turn and succ right turn, split in upper halves 
-        elif predecessor == 1 and successor != 1:
+        # If predecessor right turn and successor left turn, split in upper halves 
+        elif predecessor == 1 and successor == 2:
             low = mid + 1
- 
+
+        # If predecessor right turn and successor straight, split in upper halves 
+        # (This is to make only the last point of a straight line be included in upper_hull)
+        #MERGO WITH ABOVE LATER
+        elif predecessor == 1 and successor == 0:
+            low = mid + 1
+
+        # If predecessor straight and successor right turn, split in lower halves, BUT include current element.
+        # (This is to make the current element be pickable) 
+        #elif predecessor == 0 and successor == 1: 
+            #return arr[mid]
+
          # If left turn to neither predec or succ, element is found
-        elif predecessor != 2 and successor != 2:
+         # predecessor != 2 and successor != 2: PLACEHOLDER ELSE
+        else:
             return arr[mid]
- 
 # check punkt længst til venstre eller højre -> terminer!
 
 
@@ -149,24 +164,26 @@ def chan_algorithm(points):
             return upper_hull            
 
 
-
+p0 = Point(0,0)
 
 p1 = Point(1,1)
 p2 = Point(1,2)
 p3 = Point(2,3)
 p4 = Point(4,4)
 p5 = Point(4,3)
-p6 = Point(6,2)
-p7 = Point(6,4)
+p6 = Point(6,4)
+p7 = Point(6,2)
 p8 = Point(7,1)
 p9 = Point(8,2)
 
 points = [p1,p2,p3,p4,p5,p6,p7,p8,p9]
 
+#tangent = binary_search_orientation(points,points[1])
 
+#print(tangent.x,tangent.y)
 
 #start_total = time.time()
-upper_hull = chan_algorithm(points)
+#upper_hull = chan_algorithm(points)
 #total_time = time.time() - start_total
 
 #print("Total time: ", total_time)
@@ -175,5 +192,9 @@ upper_hull = chan_algorithm(points)
 #print("Chunks time: ", chunks_time)
 #print("Remove time: ", remove_time)
 
-print(upper_hull)
+
+#upper_hull = chan_algorithm(points)
+#print(upper_hull)
+
+
 
