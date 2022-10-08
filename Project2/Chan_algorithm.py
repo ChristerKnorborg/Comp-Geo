@@ -11,6 +11,88 @@ tangent_time = 0
 partition_time = 0
 
 
+neighbour_left = arr[j][best_idx-1]
+neighbour_right = arr[j][best_idx+1]
+
+o_test_left = orientation(p,best,neighbour_left)
+o_test_right = orientation(p,best,neighbour_right)
+
+if o_test_left != 1:
+
+def binary_search_orientation(arr, p):
+    left = 0
+    right = len(arr) - 1
+ 
+    while low <= high:
+ 
+        right = (left + right) // 2
+ 
+        # If x is greater, ignore left half
+        if orientation(p, arr[left], arr[right]):
+        if arr[mid] < x:
+            low = mid + 1
+ 
+        # If x is smaller, ignore right half
+        elif arr[mid] > x:
+            high = mid - 1
+ 
+        # means x is present at mid
+        else:
+            return mid
+ 
+    # If we reach here, then the element was not present
+    return -1
+
+
+
+def binary_search(arr, low, high):
+
+    for j in range(len(arr)):
+
+
+        if len(arr[j]) > 0:
+            best = arr[j][0]
+            param = int(len(arr[j]) / 2)
+            while (True):
+
+                param_point = arr[j][param]
+
+                o_test = orientation(p,best,param_point)                
+                if o_test != 1:
+                    best = arr[j][param]
+                    best_idx = param
+                    neighbour_left = arr[j][best_idx-1]
+                    neighbour_right = arr[j][best_idx+1]
+
+                    o_test_left = orientation(p,best,neighbour_left)
+                    o_test_right = orientation(p,best,neighbour_right)
+                    
+                    if o_test_left != 1:
+                        param = int(param/2)
+                        print("havles")
+                        if o_test_left == 0:
+                            best 
+
+                    elif o_test_right != 1:
+                        param = int(param*1.5)
+                        print("doubles")
+                        
+                    else: 
+                        print("elso")
+                        if best != None:
+                            print("best is not none")
+                            if best_tanget == None:
+                                best_tanget = best
+                            else:
+                                if orientation(p, best_tanget, best) != 1:
+                                    best_tanget = best
+                        break
+                    print(param)
+
+                else:
+                    continue
+
+
 
 # find upper hull for all partitions
 def calc_partition_upper_hulls(partition):
@@ -62,65 +144,23 @@ def upper_hall_with_size(points,h):
             #tangent_start = time.time()
 
 
-
-            for j in range(len(partition_upper_hulls)):
                 
 
-                '''
-                # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
-                if len(partition_upper_hulls[j]) > 0:
-                    # set best to lowest coordinate in the upper hull partition
-                    best = partition_upper_hulls[j][0]
-                else:
-                    continue
-                '''
-                if len(partition_upper_hulls[j]) > 0:
-
-                    best = partition_upper_hulls[j][0]
-                    param = int(len(partition_upper_hulls[j]) / 2)
-                    while (True):
-
-                        param_point = partition_upper_hulls[j][param]
-
-                        o_test = orientation(p,best,param_point)                
-                        if o_test != 1:
-                            best = partition_upper_hulls[j][param]
-                            best_idx = param
-                            neighbour_left = partition_upper_hulls[j][best_idx-1]
-                            neighbour_right = partition_upper_hulls[j][best_idx+1]
-
-                            o_test_left = orientation(p,best,neighbour_left)
-                            o_test_right = orientation(p,best,neighbour_right)
-                            
-                            if o_test_left != 1:
-                                param = int(param/2)
-                                print("havles")
-
-                            elif o_test_right != 1:
-                                param = int(param*1.5)
-                                print("doubles")
-                                
-                            else: 
-                                print("elso")
-                                if best != None:
-                                    print("best is not none")
-                                    if best_tanget == None:
-                                        best_tanget = best
-                                    else:
-                                        if orientation(p, best_tanget, best) != 1:
-                                            best_tanget = best
-                                break
-                            print(param)
-                        
-
-                else:
-                    continue
+            '''
+            # Check if upper hall exist for partition. Otherwise continue to next upper hall partition.
+            if len(partition_upper_hulls[j]) > 0:
+                # set best to lowest coordinate in the upper hull partition
+                best = partition_upper_hulls[j][0]
+            else:
+                continue
+            '''
+            best_tanget = binary_search(partition_upper_hulls, 0, len(partition_upper_hulls)-1)
 
             #global tangent_time
             #tangent_time = (time.time() - tangent_start)
 
-            if best_tanget != None:
-                p = best
+            #if best_tanget != None:
+             #   p = best
             
             
             #remove_start = time.time()

@@ -43,8 +43,8 @@ def orientation(p1, p2, p3):
 
 # Test
 #p1 = Point(0, 0)
-#p2 = Point(2, 4)
-#p3 = Point(3, 9)
+#p2 = Point(1, 1)
+#p3 = Point(2, 2)
  
-#orientation(p1, p2, p3) 
-#print("should turn left")
+#res = orientation(p1, p3, p2) 
+#print("res", res)
