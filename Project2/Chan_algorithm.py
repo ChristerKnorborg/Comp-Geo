@@ -1,4 +1,5 @@
 from math import ceil, log2
+from re import L
 import time
 
 from Graham_scan import grahams_scan
@@ -14,44 +15,38 @@ def printarray(arr):
 
 def binary_search_orientation(arr, p):
     low = 0
-    high = len(arr) - 1
+    high = len(arr)
     #printarray(arr)
     
+    #last_point  = orientation(p, arr[0], arr[high])
+    #first_point = orientation(p, arr[0], arr[1])
+
 
     while low <= high:
+
         mid = (low + high) // 2
 
-        # out of range check
         if mid != 0:
             predecessor = orientation(p, arr[mid], arr[mid-1])
-        else: 
+        else:
             predecessor = 1
-        
 
-        if mid != len(arr)-1:
-            successor = orientation(p, arr[mid], arr[mid+1])
+        if mid != len(arr)-1: 
+            successor   = orientation(p, arr[mid], arr[mid+1])
         else:
             successor = 1
         
-
-
-        # If predecessor left turn and successor right turn, split in lower halves.
+        # if predecessor left turn, limit search space to lower half
         if predecessor == 2:
             high = mid - 1
 
-        # If predecessor right turn and successor left turn, split in upper halves.
+        # If successor right turn, limit search space to upper half.
         # Same applies if neither predecessor OR successor left turn. But successor is straight.
-        # Here we want 
-        elif successor == 2:
+        # Here we only want to include the last point on a straight line on the upper hull.
+        elif successor == 2 or successor == 0:
             low = mid + 1
 
-        elif successor == 0:
-            low = mid + 1
-
-        # If neither predecessor OR successor left turn. But successor is straight
-        #elif predecessor == 0:
-            #high = mid -1
-
+        # if both neighbour test right turn or only predecessor is straight, we return index
         else:
             return arr[mid]
 
@@ -103,6 +98,8 @@ def upper_hall_with_size(points,h):
         for _ in range(h):
 
             upper_hull.append(p)
+            #partition_upper_hulls = [[point for point in outer if point != p] for outer in partition_upper_hulls]
+
 
             # Upper_Hall computed if max coordinate is p
             if p == max_coordinate_point:
