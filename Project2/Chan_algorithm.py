@@ -1,44 +1,55 @@
 from math import ceil, log2
 from re import L
+from tabnanny import check
 import time
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
 from Shared import Point
-from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks, print_points
+from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks
+
+# find upper hull for a list of partitions.
+# returns a list of upper hulls
+def calc_partition_upper_hulls(partition):
+    partition_upper_hulls = []
+    for i in range(len(partition)):
+       current_upper_hull = grahams_scan(partition[i])
+       if current_upper_hull != None:
+            partition_upper_hulls.append(current_upper_hull)
+    return partition_upper_hulls
 
 
 
+# find best tangent for a point p and an array of points arr,
+# by using orientation for binary search
 def binary_search_orientation(arr, p):
     
     low = 0
     high = len(arr)
     
-    # If only 1 element, return this.
+    # If only 1 element, return this. If p is included in this upper_hull,
+    # we simply return next element as this is the best tangent from graham.
     if len(arr) == 1:
-        if (p == arr[0]):
-            return None
-        else:
-            return arr[0]
-    # If only 1 element, return this.
+        return arr[0]
     if p == arr[0]:
         return arr[1]
 
-    while low <= high:
+    while True:
 
+        # calculate current element to check 
         mid = (low + high) // 2
         
-
+        # Out of bounds check predecessor (to mid). If out of bounds percieve as right turn
         if mid != 0:
             predecessor = orientation(p, arr[mid], arr[mid-1])
         else:
             predecessor = 1
 
+        # Out of bounds check successor (to mid). If out of bounds percieve as right turn
         if mid != len(arr)-1: 
             successor   = orientation(p, arr[mid], arr[mid+1])
         else:
             successor = 1
-
         
         # if predecessor left turn, limit search space to lower half
         if predecessor == 2:
@@ -56,22 +67,9 @@ def binary_search_orientation(arr, p):
 
 
 
-    # If we reach here, then the element was not present
-    print("Binary Search didn't find optimal")
-    return None
 
 
 
-
-
-# find upper hull for all partitions
-def calc_partition_upper_hulls(partition):
-    partition_upper_hulls = []
-    for i in range(len(partition)):
-       current_upper_hull = grahams_scan(partition[i])
-       if current_upper_hull != None:
-            partition_upper_hulls.append(current_upper_hull)
-    return partition_upper_hulls
 
 
 def upper_hall_with_size(points,h):
@@ -165,28 +163,6 @@ def chan_algorithm(points):
 
     print("CHAN DIDNT FIND UPPER HULL")            
 
-
-p0 = Point(0,0)
-p1 = Point(0,1)
-p2 = Point(0,2)
-p3 = Point(1,9)
-p4 = Point(2,0)
-p5 = Point(2,4)
-p6 = Point(3,3)
-p7 = Point(3,5)
-p8 = Point(5,3)
-p9 = Point(7,3)
-p10 = Point(7,9)
-p11 = Point(8,1)
-p12 = Point(8,2)
-p13 = Point(8,5)
-p14 = Point(9,1)
-
-points = [p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14]
-
-#tangent = binary_search_orientation(points,points[1])
-
-#print(chan_algorithm(points))
 
 #start_total = time.time()
 #upper_hull = chan_algorithm(points)
