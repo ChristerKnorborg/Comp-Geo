@@ -1,31 +1,11 @@
 from copy import deepcopy
 import matplotlib.pyplot as plt
-import numpy as np
+
+from Shared import Point
 from Graham_scan import grahams_scan
 from Gift_wrapping import gift_wrapping
-from Shared import Point, print_points
 from Chan_algorithm import chan_algorithm
-
-def gen_square_data(num_of_points, range_lower,range_upper):
-    x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = np.random.randint(range_lower,range_upper,num_of_points)
-
-    return x,y
-
-def gen_circle_data(num_of_points, diameter):
-    theta = np.random.uniform(0,2*np.pi, num_of_points)
-    diameter = np.random.uniform(0,diameter, num_of_points) ** 0.5
-
-    x = diameter * np.cos(theta)
-    y = diameter * np.sin(theta)
-
-    return x,y
-
-def gen_curve_data(num_of_points, range_lower, range_upper):
-    x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = x**2
-
-    return x,y
+from Generate_data import gen_square_data, gen_circle_data, gen_curve_data, gen_negative_curve_data
 
 
 
@@ -100,12 +80,10 @@ def square_test(num_of_points, range_lower, range_upper):
 
 
 
-def circle_test(num_of_points, diameter):
+def circle_test(num_of_points, diameter_squared):
 
-    x, y = gen_circle_data(num_of_points, diameter)
+    x, y = gen_circle_data(num_of_points, diameter_squared)
     run_and_plot(num_of_points,x,y)
-
-
 
 
 
@@ -114,9 +92,14 @@ def curve_test(num_of_points, range_lower, range_upper):
     run_and_plot(num_of_points,x,y)
 
 
+def negative_curve_test(num_of_points, range_lower, range_upper):
+    x, y = gen_negative_curve_data(num_of_points, range_lower, range_upper)
+    run_and_plot(num_of_points,x,y)
 
-#square_test(150,0,50)
+
+
+square_test(150,0,50)
 #circle_test(200,20000)
 #curve_test(20,0,50)
-
+#negative_curve_test(20,0,50)
 

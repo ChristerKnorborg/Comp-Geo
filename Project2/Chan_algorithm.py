@@ -4,7 +4,8 @@ import time
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks, print_points, Point
+from Shared import Point
+from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks, print_points
 
 
 
@@ -182,15 +183,6 @@ p13 = Point(8,5)
 p14 = Point(9,1)
 
 points = [p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14]
-
-'''
-points = []
-for i in range(0,10):
-    ex = -(i ** 2)
-    p = Point(i,ex)
-    points.append(p)
-    '''
-
 
 #tangent = binary_search_orientation(points,points[1])
 

@@ -7,7 +7,6 @@ from Chan_algorithm import chan_algorithm
 from Gift_wrapping import gift_wrapping
 from Graham_scan import grahams_scan
 from Testing import gen_circle_data, gen_square_data, gen_curve_data, make_points
-from Shared import Point
 from enum import Enum
 
 class test_type(Enum):
