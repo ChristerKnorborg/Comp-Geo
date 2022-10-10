@@ -115,7 +115,7 @@ def curve_test(num_of_points, range_lower, range_upper):
 
 
 
-square_test(20,0,10)
+square_test(15,0,10)
 #circle_test(200,20000)
 #curve_test(20,0,50)
 

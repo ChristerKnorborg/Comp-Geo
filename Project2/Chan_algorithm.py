@@ -18,9 +18,16 @@ def binary_search_orientation(arr, p):
     high = len(arr)
     #printarray(arr)
     
-    #last_point  = orientation(p, arr[0], arr[high])
-    #first_point = orientation(p, arr[0], arr[1])
-
+    # If only 1 element, return this.
+    if len(arr) == 1:
+        if (p == arr[0]):
+            return None
+        else:
+            return arr[0]
+    # If only 1 element, return this.
+    if p == arr[0]:
+        print("P == ENTRY 0")
+        return arr[1]
 
     while low <= high:
 
@@ -35,6 +42,9 @@ def binary_search_orientation(arr, p):
             successor   = orientation(p, arr[mid], arr[mid+1])
         else:
             successor = 1
+        
+
+
         
         # if predecessor left turn, limit search space to lower half
         if predecessor == 2:
@@ -83,6 +93,9 @@ def upper_hall_with_size(points,h):
         # find upper hull for all m partitions
         #partition_start = time.time()
         partition_upper_hulls = calc_partition_upper_hulls(partition)
+
+        for i in range(len(partition_upper_hulls)):
+            print_points(partition_upper_hulls[i])
         #global partition_time
         #partition_time = (time.time() - partition_start)
 
@@ -103,7 +116,6 @@ def upper_hall_with_size(points,h):
 
             # Upper_Hall computed if max coordinate is p
             if p == max_coordinate_point:
-                print("max coord")
                 return True, upper_hull
 
 
@@ -118,19 +130,23 @@ def upper_hall_with_size(points,h):
 
                 else: 
                     new_tangent = binary_search_orientation(partition_upper_hulls[j], p)
-                    
+                    if p == new_tangent:
+                        print("P SAMME SOM NEW TANGENT!")
                     if new_tangent != None:
                         if best_tangent == None:
                             best_tangent = new_tangent
                         else:
                             if orientation(p, best_tangent, new_tangent) != 1:
+                                
+                                
                                 best_tangent = new_tangent
+                            #elif orientation(p, best_tangent, new_tangent) == 0 and new_tangent.y > best_tangent.y:
+                            #   best_tangent = new_tangent
 
+            
 
-
-                if best_tangent != None:
-                    print("tangent:", (best_tangent.x,best_tangent.y))
-                    p = best_tangent
+            if best_tangent != None:
+                p = best_tangent
             #tangent_start = time.time()
 
             #global tangent_time
@@ -165,15 +181,22 @@ def chan_algorithm(points):
 
 
 p0 = Point(0,0)
-p1 = Point(1,1)
-p2 = Point(1,2)
-p3 = Point(2,3)
-p4 = Point(3,4)
-p5 = Point(6,4)
-p6 = Point(8,2)
-p7 = Point(9,1)
+p1 = Point(0,1)
+p2 = Point(0,2)
+p3 = Point(1,9)
+p4 = Point(2,0)
+p5 = Point(2,4)
+p6 = Point(3,3)
+p7 = Point(3,5)
+p8 = Point(5,3)
+p9 = Point(7,3)
+p10 = Point(7,9)
+p11 = Point(8,1)
+p12 = Point(8,2)
+p13 = Point(8,5)
+p14 = Point(9,1)
 
-points = [p0,p1,p2,p3,p4,p5,p6,p7]
+points = [p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14]
 
 '''
 points = []
@@ -184,8 +207,9 @@ for i in range(0,10):
     '''
 
 
-tangent = binary_search_orientation(points,points[1])
-print(tangent.x,tangent.y)
+#tangent = binary_search_orientation(points,points[1])
+
+print(chan_algorithm(points))
 
 #start_total = time.time()
 #upper_hull = chan_algorithm(points)
