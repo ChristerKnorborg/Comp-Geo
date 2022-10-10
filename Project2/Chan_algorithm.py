@@ -5,17 +5,52 @@ import time
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import Point
-from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks
+from Shared import get_leftmost_point_idx, get_rightmost_point_idx
+
+
+# partition a list into length of list / partitions_size (n/h). 
+def partition_list(list, partitions_size) -> list:
+
+    # if whole list fits into specified size of partitions, return list.
+    if partitions_size > len(list):
+        return list
+
+    new_list = []
+
+    # calculate what to do with leftover elements that do not take up a whole partition
+    leftover_iterations = len(list) % partitions_size
+    main_iterations = len(list) - leftover_iterations
+     
+    # fill up as many whole partitions as possible
+    for i in range(0, main_iterations, partitions_size):
+        new_list.append(list[i:i+partitions_size])
+
+    # If leftover elements are 3 or more, make a smaller partition with these (else case).
+    # If leftover elements are less than 3, graham_scan does not work on such a partition.
+    # Therefore, the first leftover element is put into the first partition, where the next
+    # (if it exist) is put into the second partition.
+    if leftover_iterations < 3 and leftover_iterations != 0:
+        new_list[0].append(list[main_iterations])
+        if leftover_iterations > 1:
+            new_list[1].append(list[main_iterations+1])
+    else:  
+        new_list.append(list[main_iterations : main_iterations + leftover_iterations])
+
+    return new_list
+
 
 # find upper hull for a list of partitions.
 # returns a list of upper hulls
 def calc_partition_upper_hulls(partition):
+
     partition_upper_hulls = []
+
     for i in range(len(partition)):
-       current_upper_hull = grahams_scan(partition[i])
-       if current_upper_hull != None:
+
+        current_upper_hull = grahams_scan(partition[i])
+        if current_upper_hull != None:
             partition_upper_hulls.append(current_upper_hull)
+        
     return partition_upper_hulls
 
 
@@ -74,63 +109,68 @@ def binary_search_orientation(arr, p):
 
 def upper_hall_with_size(points,h):
         #chunks_start = time.time()
+
         # Make m partitions
-        partition = divide_chunks(points, h)
+        partitions = partition_list(points, h)
         #global chunks_time
         #chunks_time = (time.time() - chunks_start)
 
-
-        # find upper hull for all m partitions
         #partition_start = time.time()
-        partition_upper_hulls = calc_partition_upper_hulls(partition)
+        
+        # find upper hull for all m partitions
+        partition_upper_hulls = calc_partition_upper_hulls(partitions)
 
         #global partition_time
         #partition_time = (time.time() - partition_start)
 
-        # Find start point p and max coordinate (stop criteria) 
+        # Find start point p and max coordinate end_point
         start_coordinate = get_leftmost_point_idx(points)
         max_coordinate = get_rightmost_point_idx(points)
 
         p = points[start_coordinate]
-        max_coordinate_point = points[max_coordinate]
+        end_point = points[max_coordinate]
 
         upper_hull = []
 
-        for i in range(h):
+        for _ in range(h):
 
             upper_hull.append(p)
 
 
             # Upper_Hall computed if max coordinate is p
-            if p == max_coordinate_point:
+            if p == end_point:
                 return True, upper_hull
 
 
             best_tangent = None
 
 
-            for j in range(len(partition_upper_hulls)):
+                # Find the tangent (new_tangent) to every partition of upper hulls.
+                # Update the best tangent to the best of the tangents to the partitions.
+            for i in range(len(partition_upper_hulls)):
                 
                 # check if upper hull exist for partition
-                if len(partition_upper_hulls[j]) < 1:
+                if len(partition_upper_hulls[i]) < 1:
                     continue
 
                 else: 
-                    new_tangent = binary_search_orientation(partition_upper_hulls[j], p)
-
-                    if new_tangent != None:
-                        if best_tangent == None:
+                    new_tangent = binary_search_orientation(partition_upper_hulls[i], p)
+                    
+                    if best_tangent == None:
+                        best_tangent = new_tangent
+                    else:
+                        # Update best tangent orientation through the best tangent to the new tangent makes a left turn
+                        if orientation(p, best_tangent, new_tangent) != 1:
                             best_tangent = new_tangent
-                        else:
-                            if orientation(p, best_tangent, new_tangent) == 2:
-                                best_tangent = new_tangent
-                            elif orientation(p, best_tangent, new_tangent) == 0 and new_tangent.x > best_tangent.x:
-                                best_tangent = new_tangent
+
+                        # If orientation through the best tangent to the new tangent is straight, only update if the
+                        # new tangent is further away. (this prevents intermediate points and reduces iterations - if no floating point errors)
+                        elif orientation(p, best_tangent, new_tangent) == 0 and new_tangent.x > best_tangent.x:
+                            best_tangent = new_tangent
 
             
-
-            if best_tangent != None:
-                p = best_tangent
+            
+            p = best_tangent
             #tangent_start = time.time()
 
             #global tangent_time
@@ -140,7 +180,10 @@ def upper_hall_with_size(points,h):
             
             
             #remove_start = time.time()
-            partition_upper_hulls = [[point for point in outer if point.x >= best_tangent.x] for outer in partition_upper_hulls]
+
+            # Remove points from all partition_upper_hulls if their x-coordinate are lower than the new p.
+            partition_upper_hulls = [[point for point in outer if point.x >= p.x] for outer in partition_upper_hulls]
+            
             #global remove_time
             #remove_time = (time.time() - remove_start)
 
@@ -149,6 +192,7 @@ def upper_hall_with_size(points,h):
 
 def chan_algorithm(points):
 
+    # more than 2 points required for upper hull
     n = len(points)
     if n <= 2:
         return

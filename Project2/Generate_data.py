@@ -1,4 +1,5 @@
 import numpy as np
+from Shared import Point
 
 
 def gen_square_data(num_of_points, range_lower,range_upper):
@@ -28,3 +29,12 @@ def gen_negative_curve_data(num_of_points, range_lower, range_upper):
     y = -x**2
 
     return x,y
+
+
+def make_points_from_numpy(num_of_points,x,y):
+    points = []
+    for i in range(num_of_points):
+        p = Point(x[i],y[i])
+        points.append(p)
+        del p
+    return points

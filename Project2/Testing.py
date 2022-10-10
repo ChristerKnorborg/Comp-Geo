@@ -5,22 +5,15 @@ from Shared import Point
 from Graham_scan import grahams_scan
 from Gift_wrapping import gift_wrapping
 from Chan_algorithm import chan_algorithm
-from Generate_data import gen_square_data, gen_circle_data, gen_curve_data, gen_negative_curve_data
+from Generate_data import gen_square_data, gen_circle_data, gen_curve_data, gen_negative_curve_data, make_points_from_numpy
 
 
 
-def make_points(num_of_points,x,y):
-    points = []
-    for i in range(num_of_points):
-        p = Point(x[i],y[i])
-        points.append(p)
-        del p
-    return points
 
 
 def run_and_plot(num_of_points,x,y):
 
-    graham_points = make_points(num_of_points,x,y)
+    graham_points = make_points_from_numpy(num_of_points,x,y)
     gift_points = deepcopy(graham_points)
     chan_points = deepcopy(graham_points)
 
@@ -97,9 +90,8 @@ def negative_curve_test(num_of_points, range_lower, range_upper):
     run_and_plot(num_of_points,x,y)
 
 
-
-square_test(150,0,50)
-#circle_test(200,20000)
+#square_test(150,0,50)
+circle_test(2000,2000000)
 #curve_test(20,0,50)
 #negative_curve_test(20,0,50)
 

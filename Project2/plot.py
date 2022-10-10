@@ -6,7 +6,7 @@ import time
 from Chan_algorithm import chan_algorithm
 from Gift_wrapping import gift_wrapping
 from Graham_scan import grahams_scan
-from Testing import gen_circle_data, gen_square_data, gen_curve_data, make_points
+from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy
 from enum import Enum
 
 class test_type(Enum):
@@ -42,10 +42,10 @@ def benchmark(test_type):
         elif test_type.circle:
             x, y = gen_circle_data(n,s)
 
-        else:
+        elif test_type.curve:
             x, y = gen_curve_data(n,0,s)
         
-        graham_points = make_points(n,x,y)
+        graham_points = make_points_from_numpy(n,x,y)
         gift_points = deepcopy(graham_points)
         chan_points = deepcopy(graham_points)
 
@@ -100,4 +100,4 @@ def benchmark(test_type):
     plt.show()
 
 
-benchmark(test_type.square)
+benchmark(test_type.curve)
