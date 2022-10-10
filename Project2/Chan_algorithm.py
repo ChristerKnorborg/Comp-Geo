@@ -6,17 +6,12 @@ from Graham_scan import grahams_scan
 from Orientation import orientation
 from Shared import get_leftmost_point_idx, get_rightmost_point_idx, divide_chunks, print_points, Point
 
-def printarray(arr):
-    
-    print("\nlen of arr:", len(arr))
-    for p in arr:
-        print((p.x,p.y))
 
 
 def binary_search_orientation(arr, p):
+    
     low = 0
     high = len(arr)
-    #printarray(arr)
     
     # If only 1 element, return this.
     if len(arr) == 1:
@@ -26,12 +21,12 @@ def binary_search_orientation(arr, p):
             return arr[0]
     # If only 1 element, return this.
     if p == arr[0]:
-        print("P == ENTRY 0")
         return arr[1]
 
     while low <= high:
 
         mid = (low + high) // 2
+        
 
         if mid != 0:
             predecessor = orientation(p, arr[mid], arr[mid-1])
@@ -42,8 +37,6 @@ def binary_search_orientation(arr, p):
             successor   = orientation(p, arr[mid], arr[mid+1])
         else:
             successor = 1
-        
-
 
         
         # if predecessor left turn, limit search space to lower half
@@ -77,7 +70,7 @@ def calc_partition_upper_hulls(partition):
        current_upper_hull = grahams_scan(partition[i])
        if current_upper_hull != None:
             partition_upper_hulls.append(current_upper_hull)
-    return partition
+    return partition_upper_hulls
 
 
 def upper_hall_with_size(points,h):
@@ -88,14 +81,10 @@ def upper_hall_with_size(points,h):
         #chunks_time = (time.time() - chunks_start)
 
 
-
-
         # find upper hull for all m partitions
         #partition_start = time.time()
         partition_upper_hulls = calc_partition_upper_hulls(partition)
 
-        for i in range(len(partition_upper_hulls)):
-            print_points(partition_upper_hulls[i])
         #global partition_time
         #partition_time = (time.time() - partition_start)
 
@@ -108,10 +97,9 @@ def upper_hall_with_size(points,h):
 
         upper_hull = []
 
-        for _ in range(h):
+        for i in range(h):
 
             upper_hull.append(p)
-            #partition_upper_hulls = [[point for point in outer if point != p] for outer in partition_upper_hulls]
 
 
             # Upper_Hall computed if max coordinate is p
@@ -130,18 +118,15 @@ def upper_hall_with_size(points,h):
 
                 else: 
                     new_tangent = binary_search_orientation(partition_upper_hulls[j], p)
-                    if p == new_tangent:
-                        print("P SAMME SOM NEW TANGENT!")
+
                     if new_tangent != None:
                         if best_tangent == None:
                             best_tangent = new_tangent
                         else:
-                            if orientation(p, best_tangent, new_tangent) != 1:
-                                
-                                
+                            if orientation(p, best_tangent, new_tangent) == 2:
                                 best_tangent = new_tangent
-                            #elif orientation(p, best_tangent, new_tangent) == 0 and new_tangent.y > best_tangent.y:
-                            #   best_tangent = new_tangent
+                            elif orientation(p, best_tangent, new_tangent) == 0 and new_tangent.x > best_tangent.x:
+                                best_tangent = new_tangent
 
             
 
@@ -209,7 +194,7 @@ for i in range(0,10):
 
 #tangent = binary_search_orientation(points,points[1])
 
-print(chan_algorithm(points))
+#print(chan_algorithm(points))
 
 #start_total = time.time()
 #upper_hull = chan_algorithm(points)
