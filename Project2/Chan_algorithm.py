@@ -26,17 +26,25 @@ def partition_list(list, partitions_size) -> list:
      
     # fill up as many whole partitions as possible
     for i in range(0, main_iterations, partitions_size):
+        print("append 0")
         new_list.append(list[i:i+partitions_size])
+        print(type(list[i:i+partitions_size]))
 
     # If leftover elements are 3 or more, make a smaller partition with these (else case).
     # If leftover elements are less than 3, graham_scan does not work on such a partition.
     # Therefore, the first leftover element is put into the first partition, where the next
     # (if it exist) is put into the second partition.
     if leftover_iterations < 3 and leftover_iterations != 0:
+        print("APPEND 1")
         new_list[0].append(list[main_iterations])
+        print(type(new_list[0]))
         if leftover_iterations > 1:
+            print("APPEND 2")
             new_list[1].append(list[main_iterations+1])
+            print(type(new_list[0]))
     else:  
+        print(type(list[main_iterations : main_iterations + leftover_iterations]))
+        print("append 3")
         new_list.append(list[main_iterations : main_iterations + leftover_iterations])
 
     return new_list
@@ -50,10 +58,13 @@ def calc_partition_upper_hulls(partition):
 
     for i in range(len(partition)):
 
+        print(type(partition[i]))
         current_upper_hull = grahams_scan(partition[i])
+        
         if current_upper_hull != None:
             partition_upper_hulls.append(current_upper_hull)
-        
+    
+    
     return partition_upper_hulls
 
 
@@ -255,5 +266,5 @@ def plot_chan_running_times():
    # plt.yscale('log',base=2)
     plt.show()
 
-plot_chan_running_times()
+#plot_chan_running_times()
 

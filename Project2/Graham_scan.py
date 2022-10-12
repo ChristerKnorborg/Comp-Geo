@@ -3,16 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from Orientation import orientation
-from Shared import sort_by_x_coordinate
+from Shared import Point, sort_by_x_coordinate
 from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy
 
 
-def grahams_scan(points):
+def grahams_scan(points) -> list:
     
     # more than 2 points required for upper hull
     n = len(points)
     if n <= 2:
-        return
+        return []
 
     upper_hull = []
 
@@ -73,4 +73,4 @@ def plot_graham_running_times():
    # plt.yscale('log',base=2)
     plt.show()
 
-plot_graham_running_times()
+#plot_graham_running_times()
