@@ -22,7 +22,7 @@ def gift_wrapping(points):
     while(True):
         hull.append(points[i])
 
-        j = (i + 1) % n
+        j = i + 1
 
         # update next point j to to lowest angle by checking all points for left turn
         for k in range(n):  
