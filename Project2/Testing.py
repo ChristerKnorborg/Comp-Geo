@@ -1,14 +1,13 @@
 from copy import deepcopy
+
 import matplotlib.pyplot as plt
 
-from Shared import Point
-from Graham_scan import grahams_scan
-from Gift_wrapping import gift_wrapping
 from Chan_algorithm import chan_algorithm
-from Generate_data import gen_square_data, gen_circle_data, gen_curve_data, gen_negative_curve_data, make_points_from_numpy
-
-
-
+from Generate_data import (gen_circle_data, gen_curve_data,
+                           gen_negative_curve_data, gen_square_data,
+                           make_points_from_numpy)
+from Gift_wrapping import gift_wrapping
+from Graham_scan import grahams_scan
 
 
 def run_and_plot(num_of_points,x,y):
@@ -91,7 +90,7 @@ def negative_curve_test(num_of_points, range_lower, range_upper):
 
 
 #square_test(150,-50,50)
-circle_test(200,2000)
-#curve_test(20,0,50)
+#circle_test(200,200000)
+curve_test(40,0,50)
 #negative_curve_test(20,0,50)
 

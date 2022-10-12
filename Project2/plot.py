@@ -1,5 +1,4 @@
 from copy import deepcopy
-from re import S
 import numpy as np
 import matplotlib.pyplot as plt
 import time

@@ -1,22 +1,21 @@
 from math import ceil, log2
 from re import L
-from tabnanny import check
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import get_leftmost_point_idx, get_rightmost_point_idx
+from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx
 from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy
 
 
 # partition a list into length of list / partitions_size (n/h). 
 def partition_list(list, partitions_size) -> list:
 
-    # if whole list fits into specified size of partitions, return list.
+    # if whole list fits into specified size of partitions, return the list in a list (with a single list inside).
     if partitions_size > len(list):
-        return list
+        return [list]
 
     new_list = []
 
@@ -26,26 +25,26 @@ def partition_list(list, partitions_size) -> list:
      
     # fill up as many whole partitions as possible
     for i in range(0, main_iterations, partitions_size):
-        print("append 0")
+
         new_list.append(list[i:i+partitions_size])
-        print(type(list[i:i+partitions_size]))
+
 
     # If leftover elements are 3 or more, make a smaller partition with these (else case).
     # If leftover elements are less than 3, graham_scan does not work on such a partition.
     # Therefore, the first leftover element is put into the first partition, where the next
     # (if it exist) is put into the second partition.
     if leftover_iterations < 3 and leftover_iterations != 0:
-        print("APPEND 1")
+
         new_list[0].append(list[main_iterations])
-        print(type(new_list[0]))
+
         if leftover_iterations > 1:
-            print("APPEND 2")
+        
             new_list[1].append(list[main_iterations+1])
-            print(type(new_list[0]))
+
     else:  
-        print(type(list[main_iterations : main_iterations + leftover_iterations]))
-        print("append 3")
+        
         new_list.append(list[main_iterations : main_iterations + leftover_iterations])
+
 
     return new_list
 
@@ -58,9 +57,8 @@ def calc_partition_upper_hulls(partition):
 
     for i in range(len(partition)):
 
-        print(type(partition[i]))
         current_upper_hull = grahams_scan(partition[i])
-        
+    
         if current_upper_hull != None:
             partition_upper_hulls.append(current_upper_hull)
     
@@ -175,11 +173,6 @@ def upper_hall_with_size(points,h):
                     else:
                         # Update best tangent orientation through the best tangent to the new tangent makes a left turn
                         if orientation(p, best_tangent, new_tangent) != 1:
-                            best_tangent = new_tangent
-
-                        # If orientation through the best tangent to the new tangent is straight, only update if the
-                        # new tangent is further away. (this prevents intermediate points and reduces iterations - if no floating point errors)
-                        elif orientation(p, best_tangent, new_tangent) == 0 and new_tangent.x > best_tangent.x:
                             best_tangent = new_tangent
 
             
