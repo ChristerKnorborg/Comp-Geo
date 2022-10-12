@@ -6,7 +6,7 @@ class Point:
         
 
     
-
+# inbuilt python method for sorting, which runs in n log n time complexity
 def sort_by_x_coordinate(points):
     points.sort(key=lambda p: (p.x, p.y))
 
