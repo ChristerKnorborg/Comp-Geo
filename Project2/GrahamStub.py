@@ -41,19 +41,19 @@ def grahams_scan(points) -> list:
 
     return upper_hull
 
-def plot_chans_running_times():
+def plot_graham_running_times():
     xpoints = np.array(0.0,dtype=np.float64)
     sort_times = np.array(0.0,dtype=np.float64)
     total_times = np.array(0.0,dtype=np.float64)
 
     s = 8
 
-    for i in range(2, 18):
+    for i in range(2, 22):
 
         n = 2 ** i
         s = 1.4142*s
 
-        x, y = gen_curve_data(n,0,s)
+        x, y = gen_square_data(n,0,s)
         graham_points = make_points_from_numpy(n,x,y)
 
         xpoints = np.append(xpoints , n)
@@ -65,12 +65,13 @@ def plot_chans_running_times():
         sort_times = np.append(sort_times, sort_time)
         total_times = np.append( total_times , total_time)
 
-    plt.plot(xpoints, sort_times , label = "Sort time")
-    plt.plot(xpoints , total_times , label = "Total time")
+    plt.plot(xpoints, sort_times/total_times , label = "Sort time")
+   # plt.plot(xpoints , total_times , label = "Total time")
     leg = plt.legend(loc='upper center')
-    plt.ylabel("time in seconds")
-    plt.xlabel("amount of points")
+    plt.ylabel("sort time/total time")
+    plt.xlabel("input size")
    # plt.yscale('log',base=2)
+    plt.xscale('log',base=2)
     plt.show()
 
-plot_chans_running_times()
+plot_graham_running_times()
