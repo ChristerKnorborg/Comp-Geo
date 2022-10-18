@@ -120,6 +120,9 @@ def upper_hall_with_size(points,h):
 
         # Make m partitions
         partitions = partition_list(points, h)
+
+        if partitions == None:
+            return
         
         # find upper hull for all m partitions
         partition_upper_hulls = calc_partition_upper_hulls(partitions)
@@ -129,7 +132,8 @@ def upper_hall_with_size(points,h):
         max_coordinate = get_rightmost_point_idx(points)
 
         p = points[start_coordinate]
-        end_point = points[max_coordinate]
+        end_point_x = points[max_coordinate].x
+        end_point_y = points[max_coordinate].y
 
         upper_hull = []
 
@@ -138,8 +142,9 @@ def upper_hall_with_size(points,h):
             upper_hull.append(p)
 
 
-            # Upper_Hall computed if max coordinate is p
-            if p == end_point:
+            # Upper_Hall computed if max coordinate is found. 
+            # Check is duo to multiple points laying on the same point.
+            if p.x == end_point_x and p.y == end_point_y:
                 return True, upper_hull
 
 
