@@ -108,7 +108,7 @@ def benchmark(test_type):
 
     s = 8
 
-    for i in range(2, 20):
+    for i in range(2, 22):
         print("Round: " , i)
 
         # double number of points each test iteration and
@@ -136,26 +136,26 @@ def benchmark(test_type):
         xpoints = np.append(xpoints , n)
 
 
-        timestart_graham = time.time()
+        timestart_graham = time.process_time()
         graham = grahams_scan(graham_points)
-        timestop_graham = time.time()
+        timestop_graham = time.process_time()
         running_time_grham = timestop_graham - timestart_graham
 
         grahamtimes = np.append( grahamtimes , running_time_grham)
         #print("Running time Graham Scan: " + str(running_time_grham))
 
-        timestart_gift = time.time()
+        timestart_gift = time.process_time()
         gift = gift_wrapping(gift_points)
-        timestop_gift = time.time()
+        timestop_gift = time.process_time()
         running_time_gift = timestop_gift - timestart_gift
 
         gifttimes = np.append(gifttimes , running_time_gift)
         #print("Running time Gift Wrapping: " + str(running_time_gift))
 
 
-        timestart_chan = time.time()
+        timestart_chan = time.process_time()
         chan = chan_algorithm(chan_points)
-        timestop_chan = time.time()
+        timestop_chan = time.process_time()
         running_time_chan = timestop_chan - timestart_chan
 
         chantimes = np.append(chantimes , running_time_chan)
