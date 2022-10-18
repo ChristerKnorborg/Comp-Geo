@@ -48,7 +48,7 @@ def plot_graham_running_times():
 
     s = 8
 
-    for i in range(2, 22):
+    for i in range(2, 23):
 
         n = 2 ** i
         s = 1.4142*s

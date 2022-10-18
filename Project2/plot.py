@@ -5,13 +5,14 @@ import time
 from Chan_algorithm import chan_algorithm
 from Gift_wrapping import gift_wrapping
 from Graham_scan import grahams_scan
-from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy
+from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy, gen_negative_curve_data
 from enum import Enum
 
 class test_type(Enum):
     square = 1
     circle = 2
     curve = 3
+    neg_curve = 4
 
 
 
@@ -26,7 +27,7 @@ def benchmark(test_type):
 
     s = 8
 
-    for i in range(2, 18):
+    for i in range(2, 22):
         print("Round: " , i)
 
         # double number of points each test iteration and
@@ -43,6 +44,9 @@ def benchmark(test_type):
 
         elif test_type.curve:
             x, y = gen_curve_data(n,0,s)
+
+        elif test_type.neg_curve:
+            x, y = gen_negative_curve_data(n, 0, s)
         
         graham_points = make_points_from_numpy(n,x,y)
         gift_points = deepcopy(graham_points)
@@ -57,7 +61,7 @@ def benchmark(test_type):
         running_time_grham = timestop_graham - timestart_graham
 
         grahamtimes = np.append( grahamtimes , running_time_grham)
-        print("Running time Graham Scan: " + str(running_time_grham))
+        #print("Running time Graham Scan: " + str(running_time_grham))
 
         timestart_gift = time.time()
         gift = gift_wrapping(gift_points)
@@ -65,7 +69,7 @@ def benchmark(test_type):
         running_time_gift = timestop_gift - timestart_gift
 
         gifttimes = np.append(gifttimes , running_time_gift)
-        print("Running time Gift Wrapping: " + str(running_time_gift))
+        #print("Running time Gift Wrapping: " + str(running_time_gift))
 
 
         timestart_chan = time.time()
@@ -74,7 +78,7 @@ def benchmark(test_type):
         running_time_chan = timestop_chan - timestart_chan
 
         chantimes = np.append(chantimes , running_time_chan)
-        print("Running time Chan: " + str(running_time_chan))
+       # print("Running time Chan: " + str(running_time_chan))
 
     ''' #chan_len = len(chan)
         #gift_len = len(gift)
@@ -99,4 +103,4 @@ def benchmark(test_type):
     plt.show()
 
 
-benchmark(test_type.curve)
+benchmark(test_type.neg_curve)
