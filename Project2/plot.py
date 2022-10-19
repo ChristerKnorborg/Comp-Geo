@@ -106,16 +106,16 @@ def benchmark(test_type):
     chantimes = np.array(0.0,dtype = np.float64)
 
 
-    s = 2
+    s = 1000
 
-    for i in range(6, 19):
+    for i in range(6, 20):
         print("Round: " , i)
 
         # double number of points each test iteration and
         # double size of figure each iteration. Same 41.42% increase in both radius (circle) and a side in square
 
         n = 2 ** i
-        s = 1.4142*s
+        #s = 1.4142*s
 
         if test_type.square :
             x, y = gen_square_data(n,0,s)

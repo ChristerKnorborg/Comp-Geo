@@ -93,7 +93,7 @@ def negative_curve_test(num_of_points, range_lower, range_upper):
     run_and_plot(num_of_points,x,y)
 
 
-square_test(150,0,50)
+square_test(200,0,25)
 #circle_test(200,200000)
 #curve_test(4000,0,50)
 #curve_test(2 ** 5, 0, 8 * 1.4142)

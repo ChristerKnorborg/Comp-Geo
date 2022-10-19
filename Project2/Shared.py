@@ -32,6 +32,32 @@ def get_rightmost_point_idx(points):
     return max_idx
 
 
+
+# This method decides if a straight turn should result
+# in an update for 
+def calc_straight_turn_behavior(p1,p2,p3):
+    
+    if p1.x < p2.x and p1.y < p2.y:
+        if p2.x < p3.x and p2.y < p3.y:
+            return True
+
+    elif p1.x < p2.x and p1.y > p2.y:
+        if p2.x < p3.x and p2.y > p3.y:
+            return True
+
+    elif p1.x < p2.x:  
+        if p2.x < p3.x:
+            return True
+
+    elif p1.y < p2.y:  
+        if p2.y < p3.y:
+            return True
+
+
+    else:
+         return False
+
+
 def print_points(points):
     for p in points:
         print(p.x, p.y)

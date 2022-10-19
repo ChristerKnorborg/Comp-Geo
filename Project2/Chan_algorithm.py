@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx
+from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx, calc_straight_turn_behavior
 
 
 # partition a list into length of list / partitions_size (n/h). 
@@ -105,6 +105,7 @@ def binary_search_orientation(arr, p):
         elif successor == 2 or successor == 0:
             low = mid + 1
 
+
         # if both neighbour test right turn or only predecessor is straight, we return index
         else:
             return arr[mid]
@@ -170,21 +171,8 @@ def upper_hall_with_size(points,h):
                         if turn == 2:
                             best_tangent = new_tangent
                         elif turn == 0:
-                            if p.x < best_tangent.x and p.y < best_tangent.y:
-                                if best_tangent.x < new_tangent.x and best_tangent.y < new_tangent.y:
-                                    best_tangent = new_tangent
-
-                                elif p.x < best_tangent.x and p.y > best_tangent.y:
-                                    if best_tangent.x < new_tangent.x and best_tangent.y > new_tangent.y:
-                                        best_tangent = new_tangent
-
-                                elif p.x < best_tangent.x:  
-                                    if best_tangent.x < new_tangent.x:
-                                        best_tangent = new_tangent
-
-                                elif p.y < best_tangent.y:  
-                                    if best_tangent.y < new_tangent.y:
-                                        best_tangent = new_tangent
+                            if calc_straight_turn_behavior(p,best_tangent,new_tangent):
+                                best_tangent = new_tangent
 
 
             
