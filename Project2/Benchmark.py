@@ -86,19 +86,19 @@ def benchmark_lin(test_type):
 
 def benchmark(test_case):
 
-    xpoints = np.array(0.0,dtype=np.float64)
-    grahamtimes = np.array(0.0 , dtype = np.float64)
-    gifttimes = np.array(0.0,dtype = np.float64)
-    chantimes = np.array(0.0,dtype = np.float64)
+    xpoints = np.empty(0,dtype=np.float64)
+    grahamtimes = np.empty(0 , dtype = np.float64)
+    gifttimes = np.empty(0,dtype = np.float64)
+    chantimes = np.empty(0,dtype = np.float64)
 
 
 
-    for i in range(2, 15):
+    for i in range(2,18):
         print("Round: " , i)
 
         # double number of points each test iteration and
 
-        n = int(2 ** i)
+        n = pow(2, i)
         print("n:", n)
         
 
