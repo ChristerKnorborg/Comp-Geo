@@ -33,24 +33,37 @@ def get_rightmost_point_idx(points):
 
 
 
-# This method decides if a straight turn should result
-# in an update for 
-def calc_straight_turn_behavior(p1,p2,p3):
+# This method decides if a straight turn (from the anchor_point
+# through the best_point to the new_point) result in the new_point
+# being better suited. If that is the case the method returns true.
+def straight_update_check(anchor_point, best_point, new_point):
     
-    if p1.x < p2.x and p1.y < p2.y:
-        if p2.x < p3.x and p2.y < p3.y:
+
+    # if line from bottom left to top right check
+    # anchor_point(x,y) < best_point(x,y) < new_point(x,y)
+    if anchor_point.x < best_point.x and anchor_point.y < best_point.y:
+        if best_point.x < new_point.x and best_point.y < new_point.y:
             return True
 
-    elif p1.x < p2.x and p1.y > p2.y:
-        if p2.x < p3.x and p2.y > p3.y:
+    # if line from top left to bottom right check
+    # anchor_point(x) < best_point(x) < new_point(x)
+    # new_point(y) < best_point(y) < anchor_point(y)
+    elif anchor_point.x < best_point.x and anchor_point.y > best_point.y:
+        if best_point.x < new_point.x and best_point.y > new_point.y:
             return True
 
-    elif p1.x < p2.x:  
-        if p2.x < p3.x:
+    # if line from left to right check
+    # anchor_point(x) < best_point(x) < new_point(x)
+    # new_point(y) = best_point(y) = anchor_point(y)
+    elif anchor_point.x < best_point.x and anchor_point.y == best_point.y: 
+        if best_point.x < new_point.x and best_point.y == new_point.y:
             return True
 
-    elif p1.y < p2.y:  
-        if p2.y < p3.y:
+    # if line from bottom to top check (opposite check is not needed as upper hulls stop in top left corner)
+    # anchor_point(y) < best_point(y) < new_point(y)
+    # new_point(x) = best_point(x) = anchor_point(x)
+    elif anchor_point.y < best_point.y and anchor_point.x == best_point.x:  
+        if best_point.y < new_point.y and best_point.x == new_point.x:
             return True
 
 

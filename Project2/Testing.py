@@ -3,7 +3,7 @@ from copy import deepcopy
 import matplotlib.pyplot as plt
 
 from Chan_algorithm import chan_algorithm
-from Generate_data import (gen_circle_data, gen_curve_data,
+from Generate_data import (gen_circle_data, gen_positive_curve_data,
                            gen_negative_curve_data, gen_square_data,
                            make_points_from_numpy)
 from Gift_wrapping import gift_wrapping
@@ -84,7 +84,7 @@ def circle_test(num_of_points, diameter_squared):
 
 
 def curve_test(num_of_points, range_lower, range_upper):
-    x, y = gen_curve_data(num_of_points, range_lower, range_upper)
+    x, y = gen_positive_curve_data(num_of_points, range_lower, range_upper)
     run_and_plot(num_of_points,x,y)
 
 
@@ -93,8 +93,9 @@ def negative_curve_test(num_of_points, range_lower, range_upper):
     run_and_plot(num_of_points,x,y)
 
 
-square_test(200,0,25)
+#square_test(200,0,25)
 #circle_test(200,200000)
 #curve_test(4000,0,50)
+negative_curve_test(2000,-1250,1250)
 #curve_test(2 ** 5, 0, 8 * 1.4142)
 

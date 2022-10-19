@@ -5,14 +5,8 @@ import time
 from Chan_algorithm import chan_algorithm
 from Gift_wrapping import gift_wrapping
 from Graham_scan import grahams_scan
-from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy, gen_negative_curve_data
+from Generate_data import gen_circle_data, gen_square_data, gen_positive_curve_data, make_points_from_numpy, gen_negative_curve_data
 from enum import Enum
-
-class test_type(Enum):
-    square = 1
-    circle = 2
-    curve = 3
-    neg_curve = 4
 
 def benchmark_lin(test_type):
    # np.random.seed(100)
@@ -38,7 +32,7 @@ def benchmark_lin(test_type):
             x, y = gen_circle_data(n,s)
 
         elif test_type.curve:
-            x, y = gen_curve_data(n,0,s)
+            x, y = gen_positive_curve_data(n,0,s)
 
         elif test_type.neg_curve:
             x, y = gen_negative_curve_data(n, 0, s)
@@ -75,18 +69,6 @@ def benchmark_lin(test_type):
         chantimes = np.append(chantimes , running_time_chan)
        # print("Running time Chan: " + str(running_time_chan))
 
-    ''' #chan_len = len(chan)
-        #gift_len = len(gift)
-        #graham_len = len(graham)
-
-        #lower_bound = graham_len * 0.75
-        #upper_bound = graham_len * 1.25
-
-        #if gift_len < lower_bound or gift_len > upper_bound:
-            #print("gift len over 25% away from graham")
-
-        #if chan_len < lower_bound or chan_len > upper_bound:
-            #print("chan len over 25% away from graham") '''
 
         
 
@@ -97,8 +79,12 @@ def benchmark_lin(test_type):
     #plt.xscale('log',base=2)
     plt.show()
 
-def benchmark(test_type):
-   # np.random.seed(100)
+
+
+
+
+
+def benchmark(test_case):
 
     xpoints = np.array(0.0,dtype=np.float64)
     grahamtimes = np.array(0.0 , dtype = np.float64)
@@ -106,28 +92,27 @@ def benchmark(test_type):
     chantimes = np.array(0.0,dtype = np.float64)
 
 
-    s = 1000
 
-    for i in range(6, 20):
+    for i in range(2, 15):
         print("Round: " , i)
 
         # double number of points each test iteration and
-        # double size of figure each iteration. Same 41.42% increase in both radius (circle) and a side in square
 
-        n = 2 ** i
-        #s = 1.4142*s
+        n = int(2 ** i)
+        print("n:", n)
+        
 
-        if test_type.square :
-            x, y = gen_square_data(n,0,s)
+        if test_case == 1:
+            x, y = gen_square_data(n,-10000,10000)
 
-        elif test_type.circle:
-            x, y = gen_circle_data(n,s)
+        elif test_case == 2:
+            x, y = gen_circle_data(n,10000)
 
-        elif test_type.curve:
-            x, y = gen_curve_data(n,0,s)
+        elif test_case == 3:
+            x, y = gen_positive_curve_data(n,-1200,1200)
 
-        elif test_type.neg_curve:
-            x, y = gen_negative_curve_data(n, 0, s)
+        elif test_case == 4:
+            x, y = gen_negative_curve_data(n,-1200,1200)
         
         graham_points = make_points_from_numpy(n,x,y)
         gift_points = deepcopy(graham_points)
@@ -165,8 +150,19 @@ def benchmark(test_type):
         print(len(gift))
         print(len(chan))
 
-        
 
+
+    print("graham times:")
+    print(grahamtimes)
+    print("gift times:")
+    print(gifttimes)
+    print("chan times:")
+    print(chantimes)
+    print("x points")
+    print(xpoints)
+
+
+        
     plt.plot(xpoints ,  grahamtimes/xpoints , label = "Graham Scan" )
     plt.plot(xpoints, gifttimes/xpoints , label = "Gift Wrapping")
     plt.plot(xpoints , chantimes/xpoints , label = "Chan's Algorithm")
@@ -179,4 +175,5 @@ def benchmark(test_type):
     plt.show()
 
 
-benchmark(test_type.curve)
+# parameter: 1 = square, 2 = circle, 3 = positive_curve, 4 = negative_curve
+benchmark(3)

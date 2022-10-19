@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 from Orientation import orientation
 from Shared import Point, sort_by_x_coordinate
-from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy
 
 
 def grahams_scan(points) -> list:

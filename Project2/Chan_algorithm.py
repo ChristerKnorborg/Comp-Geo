@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx, calc_straight_turn_behavior
+from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx, straight_update_check
 
 
 # partition a list into length of list / partitions_size (n/h). 
@@ -166,12 +166,13 @@ def upper_hall_with_size(points,h):
                     if best_tangent == None:
                         best_tangent = new_tangent
                     else:
-                        # Update best tangent orientation through the best tangent to the new tangent makes a left turn
+                        # Update best tangent if orientation from p through the best tangent to the new tangent
+                        # makes a left turn or (potentially) if it goes straight
                         turn = orientation(p, best_tangent, new_tangent)
                         if turn == 2:
                             best_tangent = new_tangent
                         elif turn == 0:
-                            if calc_straight_turn_behavior(p,best_tangent,new_tangent):
+                            if straight_update_check(p,best_tangent,new_tangent):
                                 best_tangent = new_tangent
 
 

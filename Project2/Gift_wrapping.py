@@ -1,5 +1,5 @@
 from Orientation import orientation
-from Shared import get_leftmost_point_idx, get_rightmost_point_idx, calc_straight_turn_behavior
+from Shared import get_leftmost_point_idx, get_rightmost_point_idx, straight_update_check
 
 
 def gift_wrapping(points):
@@ -26,8 +26,7 @@ def gift_wrapping(points):
 
         hull.append(points[i])
 
-        # mod to prevent out of bounds issues for j (in floating point error)
-
+        # mod to prevent out of bounds issues for j 
         j = (i + 1) % n
 
         # update next point j to to lowest angle by checking all points for left turn
@@ -36,14 +35,15 @@ def gift_wrapping(points):
             if turn == 2:
                 j = k
             elif turn == 0:
-                if calc_straight_turn_behavior(points[i], points[j], points[k]):
+                if straight_update_check(points[i], points[j], points[k]):
                     j = k 
                     
 
         # at the end of the loop, the current (i) is set to the next index (j)
         i = j
         
-        # breaks the algorithm after upper hull by using max_idx. 
+        # Breaks the algorithm after upper hull by using max_idx. 
+        # Using the values in case of points with same max val. 
         if points[i].x == max_x and points[i].y == max_y:
             hull.append(points[i])
             break

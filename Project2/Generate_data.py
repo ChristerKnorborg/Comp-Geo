@@ -17,16 +17,18 @@ def gen_circle_data(num_of_points, diameter):
 
     return x,y
 
-def gen_curve_data(num_of_points, range_lower, range_upper):
+def gen_positive_curve_data(num_of_points, range_lower, range_upper):
     x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = x**2
+    y = y = pow(x, 2) 
 
     return x,y
 
 
 def gen_negative_curve_data(num_of_points, range_lower, range_upper):
     x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = -(x**2)
+    y = pow(x, 2) 
+    y = -y
+    
 
     return x,y
 
