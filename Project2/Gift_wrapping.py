@@ -15,26 +15,35 @@ def gift_wrapping(points):
 
     hull = []
 
+    max_x = points[max_idx].x
+    max_y = points[max_idx].y
 
     i = min_idx
     j = 0
     
     while(True):
+
+
         hull.append(points[i])
 
         # mod to prevent out of bounds issues for j
-        j = (i + 1) % n
+        
+        j = (i + 1)
 
         # update next point j to to lowest angle by checking all points for left turn
         for k in range(n):  
-            if orientation(points[i], points[j], points[k]) == 2:
+            turn = orientation(points[i], points[j], points[k])
+            if turn == 2:
                 j = k
+            elif turn == 0:
+                if points[j].x < points[k].x or points[j].y < points[k].y:
+                    j = k
 
         # at the end of the loop, the current (i) is set to the next index (j)
         i = j
         
         # breaks the algorithm after upper hull by using max_idx. 
-        if i == max_idx:
+        if points[i].x == max_x and points[i].y == max_y:
             hull.append(points[i])
             break
                 

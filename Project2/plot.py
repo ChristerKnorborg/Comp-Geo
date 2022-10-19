@@ -108,7 +108,7 @@ def benchmark(test_type):
 
     s = 8
 
-    for i in range(2, 22):
+    for i in range(6, 19):
         print("Round: " , i)
 
         # double number of points each test iteration and
@@ -160,19 +160,10 @@ def benchmark(test_type):
 
         chantimes = np.append(chantimes , running_time_chan)
        # print("Running time Chan: " + str(running_time_chan))
-
-    ''' #chan_len = len(chan)
-        #gift_len = len(gift)
-        #graham_len = len(graham)
-
-        #lower_bound = graham_len * 0.75
-        #upper_bound = graham_len * 1.25
-
-        #if gift_len < lower_bound or gift_len > upper_bound:
-            #print("gift len over 25% away from graham")
-
-        #if chan_len < lower_bound or chan_len > upper_bound:
-            #print("chan len over 25% away from graham") '''
+        print("Graham, Gift, Chan:")    
+        print(len(graham))
+        print(len(gift))
+        print(len(chan))
 
         
 
@@ -188,4 +179,4 @@ def benchmark(test_type):
     plt.show()
 
 
-benchmark(test_type.neg_curve)
+benchmark(test_type.curve)

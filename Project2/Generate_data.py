@@ -26,7 +26,7 @@ def gen_curve_data(num_of_points, range_lower, range_upper):
 
 def gen_negative_curve_data(num_of_points, range_lower, range_upper):
     x = np.random.randint(range_lower,range_upper,num_of_points)
-    y = -x**2
+    y = -(x**2)
 
     return x,y
 
