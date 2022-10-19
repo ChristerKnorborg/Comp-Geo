@@ -166,8 +166,26 @@ def upper_hall_with_size(points,h):
                         best_tangent = new_tangent
                     else:
                         # Update best tangent orientation through the best tangent to the new tangent makes a left turn
-                        if orientation(p, best_tangent, new_tangent) != 1:
+                        turn = orientation(p, best_tangent, new_tangent)
+                        if turn == 2:
                             best_tangent = new_tangent
+                        elif turn == 0:
+                            if p.x < best_tangent.x and p.y < best_tangent.y:
+                                if best_tangent.x < new_tangent.x and best_tangent.y < new_tangent.y:
+                                    best_tangent = new_tangent
+
+                                elif p.x < best_tangent.x and p.y > best_tangent.y:
+                                    if best_tangent.x < new_tangent.x and best_tangent.y > new_tangent.y:
+                                        best_tangent = new_tangent
+
+                                elif p.x < best_tangent.x:  
+                                    if best_tangent.x < new_tangent.x:
+                                        best_tangent = new_tangent
+
+                                elif p.y < best_tangent.y:  
+                                    if best_tangent.y < new_tangent.y:
+                                        best_tangent = new_tangent
+
 
             
             

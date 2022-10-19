@@ -106,7 +106,7 @@ def benchmark(test_type):
     chantimes = np.array(0.0,dtype = np.float64)
 
 
-    s = 8
+    s = 2
 
     for i in range(6, 19):
         print("Round: " , i)

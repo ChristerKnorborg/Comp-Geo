@@ -40,7 +40,11 @@ def run_and_plot(num_of_points,x,y):
         chan_a.append(chan_upper_hull[i].x)
         chan_b.append(chan_upper_hull[i].y)          
 
-    
+    print("size of upper hulls: Graham, Gift, Chan:")    
+    print(len(graham_upper_hull))
+    print(len(gift_upper_hull))
+    print(len(chan_upper_hull))
+
     fig = plt.figure()
 
     ax1 = fig.add_subplot(131)
@@ -89,8 +93,8 @@ def negative_curve_test(num_of_points, range_lower, range_upper):
     run_and_plot(num_of_points,x,y)
 
 
-#square_test(150,-50,50)
+square_test(150,0,50)
 #circle_test(200,200000)
-curve_test(4000,0,50)
+#curve_test(4000,0,50)
 #curve_test(2 ** 5, 0, 8 * 1.4142)
 
