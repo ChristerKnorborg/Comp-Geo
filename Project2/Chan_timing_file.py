@@ -1,13 +1,11 @@
 from math import ceil, log2
-from os import remove
-from re import L
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 
 from Graham_scan import grahams_scan
 from Orientation import orientation
-from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx
+from Shared import Point, get_leftmost_point_idx, get_rightmost_point_idx, straight_update_check
 from Generate_data import gen_square_data, make_points_from_numpy
 
 
@@ -114,6 +112,7 @@ def binary_search_orientation(arr, p):
         elif successor == 2 or successor == 0:
             low = mid + 1
 
+
         # if both neighbour test right turn or only predecessor is straight, we return index
         else:
             return arr[mid]
@@ -124,8 +123,8 @@ def binary_search_orientation(arr, p):
 
 
 
-def upper_hall_with_size(points,h):
 
+def upper_hall_with_size(points,h):
 
         chunks_start = time.time()
 
@@ -135,6 +134,10 @@ def upper_hall_with_size(points,h):
         global chunks_total
         chunks_total = chunks_total + chunks_time
 
+
+        if partitions == None:
+            return
+        
         graham_start = time.time()
         
         # find upper hull for all m partitions
@@ -150,16 +153,19 @@ def upper_hall_with_size(points,h):
         max_coordinate = get_rightmost_point_idx(points)
 
         p = points[start_coordinate]
-        end_point = points[max_coordinate]
+        end_point_x = points[max_coordinate].x
+        end_point_y = points[max_coordinate].y
 
         upper_hull = []
+
         for _ in range(h):
 
             upper_hull.append(p)
 
 
-            # Upper_Hall computed if max coordinate is p
-            if p == end_point:
+            # Upper_Hall computed if max coordinate is found. 
+            # Check is duo to multiple points laying on the same point.
+            if p.x == end_point_x and p.y == end_point_y:
                 return True, upper_hull
 
 
@@ -181,35 +187,46 @@ def upper_hall_with_size(points,h):
                     if best_tangent == None:
                         best_tangent = new_tangent
                     else:
-                        # Update best tangent orientation through the best tangent to the new tangent makes a left turn
-                        if orientation(p, best_tangent, new_tangent) != 1:
+                        # Update best tangent if orientation from p through the best tangent to the new tangent
+                        # makes a left turn or (potentially) if it goes straight
+                        turn = orientation(p, best_tangent, new_tangent)
+                        if turn == 2:
                             best_tangent = new_tangent
+                        elif turn == 0:
+                            if straight_update_check(p,best_tangent,new_tangent):
+                                best_tangent = new_tangent
+
 
             
-            p = best_tangent
             
+            p = best_tangent
 
             tangent_time = (time.time() - tangent_start)
             global tangent_total
             tangent_total = tangent_total + tangent_time
-            
-            
+
+
             remove_start = time.time()
 
             # Remove points from all partition_upper_hulls if their x-coordinate are lower than the new p.
             partition_upper_hulls = [[point for point in outer if point.x >= p.x] for outer in partition_upper_hulls]
-            
-            
+
             remove_time = (time.time() - remove_start)
             global remove_total
             remove_total = remove_total + remove_time
 
-        
         return False, []
+
+       
+
+
+
+
+
 
 
 def chan_algorithm(points):
-
+    
     # more than 2 points required for upper hull
     n = len(points)
     if n <= 2:
@@ -220,31 +237,27 @@ def chan_algorithm(points):
     for i in range(1,range_param):
         h = int(2**2**i)
         cond, upper_hull = upper_hall_with_size(points,h)
-
         if cond:
             return upper_hull
-    
-    print("CHAN DIDNT FIND UPPER HULL")            
+
+    print("CHAN DIDNT FIND UPPER HULL")     
 
 
 
 
 def plot_chan_running_times():
-    xpoints = np.array(0.0,dtype=np.float64)
-    partition_times = np.array(0.0,dtype=np.float64)
-    graham_times = np.array(0.0,dtype=np.float64)
-    binary_times = np.array(0.0,dtype=np.float64)
-    remove_times = np.array(0.0,dtype=np.float64)
-    total_times = np.array(0.0,dtype=np.float64)
+    xpoints = np.empty(0,dtype=np.float64)
+    partition_times = np.empty(0,dtype=np.float64)
+    graham_times = np.empty(0,dtype=np.float64)
+    binary_times = np.empty(0,dtype=np.float64)
+    remove_times = np.empty(0,dtype=np.float64)
+    total_times = np.empty(0,dtype=np.float64)
 
-    s = 8
+    for i in range(10, 19):
+        n = pow(2, i)
+        
 
-    for i in range(2, 19):
-
-        n = 2 ** i
-        s = 1.4142*s
-
-        x, y = gen_square_data(n,0,s)
+        x, y = gen_square_data(n,-10000,10000)
 
         start_total = time.time()
         chans_points = make_points_from_numpy(n,x,y)
@@ -272,10 +285,10 @@ def plot_chan_running_times():
         remove_total = 0
 
 
-    #partition_times = partition_times/total_times
-    #graham_times = graham_times/total_times
-    #binary_times = binary_times/total_times
-    #remove_times = remove_times/total_times
+    partition_times = partition_times/total_times
+    graham_times = graham_times/total_times
+    binary_times = binary_times/total_times
+    remove_times = remove_times/total_times
 
 
     plt.plot(xpoints, partition_times , label = "Partition time")
