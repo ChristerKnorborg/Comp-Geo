@@ -31,7 +31,7 @@ def benchmark(test_case):
             x, y = gen_square_data(n,-10000,10000)
 
         elif test_case == 2:
-            x, y = gen_circle_data(n,10000)
+            x, y = gen_circle_data(n,1000000)
 
         elif test_case == 3:
             x, y = gen_positive_curve_data(n,-1200,1200)
@@ -88,17 +88,18 @@ def benchmark(test_case):
 
 
         
-    plt.plot(xpoints ,  grahamtimes/xpoints , label = "Graham Scan" )
-    plt.plot(xpoints, gifttimes/xpoints , label = "Gift Wrapping")
-    plt.plot(xpoints , chantimes/xpoints , label = "Chan's Algorithm")
+    plt.plot(xpoints ,  grahamtimes*1000 , label = "Graham Scan" )
+    plt.plot(xpoints, gifttimes*1000 , label = "Gift Wrapping")
+    plt.plot(xpoints , chantimes*1000 , label = "Chan's Algorithm")
 
     plt.ylabel("running time/input size")
     plt.xlabel("input size")
 
     leg = plt.legend(loc='upper center')
     plt.xscale('log',base=2)
+    #plt.yscale('log',base=2)
     plt.show()
 
 
 # parameter: 1 = square, 2 = circle, 3 = positive_curve, 4 = negative_curve
-benchmark(3)
+benchmark(2)
