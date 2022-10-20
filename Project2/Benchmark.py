@@ -1,4 +1,5 @@
 from copy import deepcopy
+from random import seed
 import numpy as np
 import matplotlib.pyplot as plt
 import time
@@ -101,4 +102,4 @@ def benchmark(test_case):
 
 
 # parameter: 1 = square, 2 = circle, 3 = positive_curve, 4 = negative_curve
-benchmark(3)
+benchmark(2)
