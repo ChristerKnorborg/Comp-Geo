@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from Orientation import orientation
 from Shared import Point, sort_by_x_coordinate
-from Generate_data import gen_circle_data, gen_square_data, gen_curve_data, make_points_from_numpy
+from Generate_data import gen_square_data, make_points_from_numpy
 
 
 def grahams_scan(points) -> list:
@@ -42,18 +42,17 @@ def grahams_scan(points) -> list:
     return upper_hull
 
 def plot_graham_running_times():
-    xpoints = np.array(0.0,dtype=np.float64)
-    sort_times = np.array(0.0,dtype=np.float64)
-    total_times = np.array(0.0,dtype=np.float64)
+    xpoints = np.empty(0,dtype=np.float64)
+    sort_times = np.empty(0,dtype=np.float64)
+    total_times = np.empty(0,dtype=np.float64)
 
-    s = 8
 
     for i in range(2, 23):
 
-        n = 2 ** i
-        s = 1.4142*s
+        n = pow(2, i)
+        
 
-        x, y = gen_square_data(n,0,s)
+        x, y = gen_square_data(n,-10000,10000)
         graham_points = make_points_from_numpy(n,x,y)
 
         xpoints = np.append(xpoints , n)

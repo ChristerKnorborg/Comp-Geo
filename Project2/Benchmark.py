@@ -17,8 +17,7 @@ def benchmark(test_case):
     chantimes = np.empty(0,dtype = np.float64)
 
 
-
-    for i in range(2,18):
+    for i in range(2,16):
         print("Round: " , i)
 
         # double number of points each test iteration and
@@ -88,9 +87,9 @@ def benchmark(test_case):
 
 
         
-    plt.plot(xpoints ,  grahamtimes*1000 , label = "Graham Scan" )
-    plt.plot(xpoints, gifttimes*1000 , label = "Gift Wrapping")
-    plt.plot(xpoints , chantimes*1000 , label = "Chan's Algorithm")
+    plt.plot(xpoints ,  grahamtimes/xpoints , label = "Graham Scan" )
+    plt.plot(xpoints, gifttimes/xpoints , label = "Gift Wrapping")
+    plt.plot(xpoints , chantimes/xpoints , label = "Chan's Algorithm")
 
     plt.ylabel("running time/input size")
     plt.xlabel("input size")
@@ -102,4 +101,4 @@ def benchmark(test_case):
 
 
 # parameter: 1 = square, 2 = circle, 3 = positive_curve, 4 = negative_curve
-benchmark(2)
+benchmark(4)
